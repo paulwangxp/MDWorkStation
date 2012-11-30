@@ -62,6 +62,8 @@ namespace MDWorkStation
                                     // this.Hide();
                                     // MessageBox.Show("sss");
 
+                                    
+
                                     break;
                                 }
                                 int devType = Marshal.ReadInt32(m.LParam, 4);
@@ -76,8 +78,20 @@ namespace MDWorkStation
                                     //{
 
                                     //}
+
+                                    //根据盘符获得磁盘信息，并且将此对象放入队列待用
+                                    MDUsb usbDiskObject = new MDUsb();
+                                    if (getDiskInfo(this.Text+"\\", usbDiskObject))
+                                    {
+                                        usbQueue.Enqueue(usbDiskObject);
+                                        writeMsg(usbDiskObject.getDiskInfoStrirng());
+                                    }
+
+                                    writeMsg(this.Text + " 盘 系统读取成功");
+                                    break;
+
                                 }
-                                this.label_device.Text = this.Text;
+                                
                             }
                             break;
                         case DBT_CONFIGCHANGECANCELED:
@@ -101,10 +115,12 @@ namespace MDWorkStation
                                     vol = (DEV_BROADCAST_VOLUME)Marshal.PtrToStructure(m.LParam, typeof(DEV_BROADCAST_VOLUME));
                                     ID = vol.dbcv_unitmask.ToString("x");
                                     this.Text = IO(ID) + "盘退出！\n";
-
+                                    writeMsg(this.Text);
+                                    break;
 
                                 }
-                                this.label_device.Text += this.Text;
+                                
+                                
                                 // MessageBox.Show("U盘已经卸载", "信息提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             }
                             break;
@@ -217,6 +233,35 @@ namespace MDWorkStation
             return Value;
         }
 
+        //根据盘符获得磁盘信息
+        private bool getDiskInfo(string diskName/*盘符*/ ,MDUsb usbDisk/*Out 返回一个对象*/)
+        {
+
+            DriveInfo[] s = DriveInfo.GetDrives();
+            bool findDisk = false;
+            foreach (DriveInfo myDrive in s)
+            {
+                if (myDrive.Name.Equals(diskName.ToUpper()))
+                {
+                    findDisk = true;
+
+                    usbDisk.driverName = myDrive.Name;
+                    usbDisk.driverLable = myDrive.VolumeLabel;
+                    usbDisk.driverType = myDrive.DriveType.ToString();
+                    usbDisk.driverFormat = myDrive.DriveFormat;
+                    usbDisk.TotalSize = myDrive.TotalSize.ToString();
+                    usbDisk.TotalFreeSpace = myDrive.TotalFreeSpace.ToString();
+                    usbDisk.AvailableFreeSpace = myDrive.AvailableFreeSpace.ToString();
+                    usbDisk.freePercent = (int)(myDrive.AvailableFreeSpace * 100 / myDrive.TotalSize);
+
+                    break;
+                    
+                }
+            }
+
+            return findDisk;
+        }
+
         private string[] getUsbDeviceName()
         {
             string []deviceInfo = new string[26];
@@ -256,7 +301,7 @@ namespace MDWorkStation
                 }
                 
             }
-            label_device.Text = sb.ToString();
+            //label_device.Text = sb.ToString();
 
             return deviceInfo;
         }
