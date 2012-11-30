@@ -77,7 +77,7 @@
             // label_device
             // 
             this.label_device.AutoSize = true;
-            this.label_device.Location = new System.Drawing.Point(1227, 739);
+            this.label_device.Location = new System.Drawing.Point(638, 115);
             this.label_device.Name = "label_device";
             this.label_device.Size = new System.Drawing.Size(77, 12);
             this.label_device.TabIndex = 1;
@@ -343,6 +343,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::MDWorkStation.Properties.Resources._1_376;
             this.ClientSize = new System.Drawing.Size(1280, 820);
+            this.Controls.Add(this.label_device);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox18);
             this.Controls.Add(this.pictureBox17);
@@ -364,7 +365,6 @@
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.pictureBox_logo);
-            this.Controls.Add(this.label_device);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Form1";
             this.Text = "Form1";
