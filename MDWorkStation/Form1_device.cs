@@ -55,9 +55,6 @@ namespace MDWorkStation
             else
                 MessageBox.Show(" 连接成功 ", " 无驱动版本高清DV ");
 
-
-
-
             return rtn;
         }
 

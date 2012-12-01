@@ -7,13 +7,18 @@ using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using Microsoft.Win32;
+using System.IO;
 
 namespace MDWorkStation
 {
     public partial class Form1 : Form
     {
-        
-        Queue <MDUsb>usbQueue = new Queue<MDUsb>();//USB对象队列，结束一个pop up一个
+
+        Dictionary<string, MDUsb> usbDiskDic = new Dictionary<string, MDUsb> ();//USB对象队列，结束一个pop up一个
+
+        bool m_hasDriver = false;//是否是有驱动版本
+        string m_interfaceStr = "";//上传到服务器的接口地址
+        string m_DataPathStr = "";//随时录数据保存路径
 
         public Form1()
         {
@@ -25,7 +30,7 @@ namespace MDWorkStation
 
             StartIdle();//进入自动上传循环中
 
-            string []drivers = getUsbDeviceName();//获得usb的盘符
+            //string []drivers = getUsbDeviceName();//获得usb的盘符
 
             //initDevice();
         }
@@ -59,13 +64,16 @@ namespace MDWorkStation
  
             //1.读取当前程序配置
             writeMsg("读取配置...");
-            //2.开启定时器，查找U盘变化
-            writeMsg("系统等待中...");
+            INIFile iniObject = new INIFile();
+            m_hasDriver = bool.Parse(iniObject.IniReadValue("config", "Driver"));
+            m_interfaceStr = iniObject.IniReadValue("config", "Interface");
+            m_DataPathStr = iniObject.IniReadValue("config", "Path");
+            //2.开启windows消息处理，查找U盘变化
             //发现有设备插入，读取盘符，压入队列
-            writeMsg("G 盘插入，开始自动上传...");
-            //根据USB端口顺序，设置插入设备为蓝色
-            //进行队列U盘的批量文件上传工作
-            writeMsg("G 盘插自动上传结束...");
+            
+            //3.启动定时器，读取队列磁盘
+            timer_usbDiskCopy.Interval = 1000;
+            timer_usbDiskCopy.Enabled = true;
             
 
         }
@@ -85,36 +93,40 @@ namespace MDWorkStation
             this.Close();
         }
 
-        public static void RunWhenStart(bool Started, string name, string path)
+        //U盘定时拷贝Timer
+        private void timer_usbDiskCopy_Tick(object sender, EventArgs e)
         {
-            return;
-            RegistryKey HKLM = Registry.LocalMachine;
-            RegistryKey Run = HKLM.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run");
-            if (Started == true)
+            timer_usbDiskCopy.Enabled = false;
+
+
+            try
             {
-                try
+                if (usbDiskDic.Count > 0)
                 {
-                    Run.SetValue(name, path);
-                    HKLM.Close();
-                }
-                catch
-                {
+                    foreach (MDUsb usbItem in usbDiskDic.Values)//遍历整个usb队列
+                    {
+                        string sDir = "\\Data\\" + DateTime.Now.Year.ToString() + "\\" + 
+                            DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString();
+                        Directory.CreateDirectory(System.Environment.CurrentDirectory + sDir);//创建文件夹，\Data\2012\201211\
+                    }
+                    
 
                 }
             }
-            else
+            catch (Exception ex)
             {
-                try
-                {
-                    Run.DeleteValue(name);
-                    HKLM.Close();
-                }
-                catch
-                {
-
-                }
+                ;
             }
+
+
+
+
+
+            timer_usbDiskCopy.Enabled = true;
+
         }
+
+        
     }
 
 

@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.IO;
+using Microsoft.Win32;
 
 namespace MDWorkStation
 {
@@ -52,7 +53,7 @@ namespace MDWorkStation
                         case WM_DEVICECHANGE:
                             break;
                         case DBT_DEVICEARRIVAL://U盘有插入
-                            this.timer1.Enabled = true;
+                            this.timer_usbDiskCopy.Enabled = true;
                             DriveInfo[] s = DriveInfo.GetDrives();
                             foreach (DriveInfo DriveI in s)
                             {
@@ -83,11 +84,11 @@ namespace MDWorkStation
                                     MDUsb usbDiskObject = new MDUsb();
                                     if (getDiskInfo(this.Text+"\\", usbDiskObject))
                                     {
-                                        usbQueue.Enqueue(usbDiskObject);
+                                        usbDiskDic.Add(this.Text + "\\", usbDiskObject);//将插入U盘对象放入容器
                                         writeMsg(usbDiskObject.getDiskInfoStrirng());
                                     }
 
-                                    writeMsg(this.Text + " 盘 系统读取成功");
+                                    writeMsg(this.Text + " 盘系统读取成功");
                                     break;
 
                                 }
@@ -114,8 +115,9 @@ namespace MDWorkStation
                                     DEV_BROADCAST_VOLUME vol;
                                     vol = (DEV_BROADCAST_VOLUME)Marshal.PtrToStructure(m.LParam, typeof(DEV_BROADCAST_VOLUME));
                                     ID = vol.dbcv_unitmask.ToString("x");
-                                    this.Text = IO(ID) + "盘退出！\n";
-                                    writeMsg(this.Text);
+                                    this.Text = IO(ID);
+                                    usbDiskDic.Remove(this.Text + "\\");//将卸载U盘对象从容器移出
+                                    writeMsg(this.Text + " 盘已卸载!");
                                     break;
 
                                 }
@@ -306,6 +308,43 @@ namespace MDWorkStation
             return deviceInfo;
         }
 
+
+        //利用注册表开机启动
+        public static void RunWhenStart(bool Started, string name, string path)
+        {
+
+            //如果是vista及以上版本，不支持直接写注册表，所以退出
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT &&
+                Environment.OSVersion.Version.Major >= 6)
+                return;
+
+            RegistryKey HKLM = Registry.LocalMachine;
+            RegistryKey Run = HKLM.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run");
+            if (Started == true)
+            {
+                try
+                {
+                    Run.SetValue(name, path);
+                    HKLM.Close();
+                }
+                catch
+                {
+
+                }
+            }
+            else
+            {
+                try
+                {
+                    Run.DeleteValue(name);
+                    HKLM.Close();
+                }
+                catch
+                {
+
+                }
+            }
+        }
       
     }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Windows.Forms;
 
 namespace MDWorkStation
 {
@@ -66,6 +67,13 @@ namespace MDWorkStation
         public static void WriteLog(string msg)
         {
             WriteLog(LogFile.Trace.ToString(), msg);
+        }
+
+
+        public static void showErrorMsg(string msg)
+        {
+            WriteLog(msg);
+            MessageBox.Show( msg,"错误",MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 

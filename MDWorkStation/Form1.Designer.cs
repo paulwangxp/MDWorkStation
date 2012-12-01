@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.timer_usbDiskCopy = new System.Windows.Forms.Timer(this.components);
             this.pBox_logo = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
@@ -108,6 +108,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox17)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox18)).BeginInit();
             this.SuspendLayout();
+            // 
+            // timer_usbDiskCopy
+            // 
+            this.timer_usbDiskCopy.Interval = 1000;
+            this.timer_usbDiskCopy.Tick += new System.EventHandler(this.timer_usbDiskCopy_Tick);
             // 
             // pBox_logo
             // 
@@ -886,7 +891,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer timer_usbDiskCopy;
         private System.Windows.Forms.PictureBox pBox_logo;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;

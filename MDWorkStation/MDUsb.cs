@@ -16,6 +16,7 @@ namespace MDWorkStation
         public int freePercent/*剩余空间（百分比）*/;
 
         public long usbHubNuber/*对应的usb hub的顺序*/;
+        public string diviceID/*设备编号*/;
 
         public string getDiskInfoStrirng()
         {
