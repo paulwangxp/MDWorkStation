@@ -43,12 +43,13 @@ namespace MDWorkStation
         /// </summary> 
         /// <param name="Section">项目名称(如 [TypeName] )</param> 
         /// <param name="Key">键</param> 
-        public string IniReadValue(string Section, string Key)
+        public string IniReadValue(string Section, string Key, string sDefaultValue)
         {
             if (!ExistINIFile())
             {
-                string msg = "config 文件不存在！";
-                LogManager.showErrorMsg(msg);
+                //string msg = "config 文件不存在！";
+                //LogManager.showErrorMsg(msg);
+                return sDefaultValue;
             }
 
             StringBuilder temp = new StringBuilder(500);

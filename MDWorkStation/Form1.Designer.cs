@@ -87,6 +87,8 @@
             this.label_id_15 = new System.Windows.Forms.Label();
             this.label_id_14 = new System.Windows.Forms.Label();
             this.label_id_13 = new System.Windows.Forms.Label();
+            this.imageButton_Setup = new System.Windows.Forms.ImageButton();
+            this.labInfo = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pBox_logo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -107,6 +109,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox16)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox17)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox18)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imageButton_Setup)).BeginInit();
             this.SuspendLayout();
             // 
             // timer_usbDiskCopy
@@ -273,8 +276,9 @@
             this.button1.BackColor = System.Drawing.Color.Transparent;
             this.button1.DialogResult = System.Windows.Forms.DialogResult.None;
             this.button1.DownImage = global::MDWorkStation.Properties.Resources.c3;
+            this.button1.Font = new System.Drawing.Font("宋体", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.button1.HoverImage = global::MDWorkStation.Properties.Resources.c2;
-            this.button1.Location = new System.Drawing.Point(1019, 713);
+            this.button1.Location = new System.Drawing.Point(1070, 713);
             this.button1.Name = "button1";
             this.button1.NormalImage = global::MDWorkStation.Properties.Resources.c1;
             this.button1.Size = new System.Drawing.Size(148, 60);
@@ -798,12 +802,43 @@
             this.label_id_13.TabIndex = 48;
             this.label_id_13.Text = "编号:11111111";
             // 
+            // imageButton_Setup
+            // 
+            this.imageButton_Setup.BackColor = System.Drawing.Color.Transparent;
+            this.imageButton_Setup.DialogResult = System.Windows.Forms.DialogResult.None;
+            this.imageButton_Setup.DownImage = global::MDWorkStation.Properties.Resources.c3;
+            this.imageButton_Setup.Font = new System.Drawing.Font("宋体", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.imageButton_Setup.HoverImage = global::MDWorkStation.Properties.Resources.c2;
+            this.imageButton_Setup.Location = new System.Drawing.Point(855, 713);
+            this.imageButton_Setup.Name = "imageButton_Setup";
+            this.imageButton_Setup.NormalImage = global::MDWorkStation.Properties.Resources.c1;
+            this.imageButton_Setup.Size = new System.Drawing.Size(148, 60);
+            this.imageButton_Setup.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.imageButton_Setup.TabIndex = 54;
+            this.imageButton_Setup.TabStop = false;
+            this.imageButton_Setup.Text = "设置";
+            this.imageButton_Setup.Click += new System.EventHandler(this.imageButton_Setup_Click);
+            // 
+            // labInfo
+            // 
+            this.labInfo.AutoSize = true;
+            this.labInfo.BackColor = System.Drawing.Color.Tan;
+            this.labInfo.Font = new System.Drawing.Font("宋体", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labInfo.ForeColor = System.Drawing.Color.Black;
+            this.labInfo.Location = new System.Drawing.Point(378, 24);
+            this.labInfo.Name = "labInfo";
+            this.labInfo.Size = new System.Drawing.Size(525, 35);
+            this.labInfo.TabIndex = 55;
+            this.labInfo.Text = "名都执法记录仪采集工作站 V1.0";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::MDWorkStation.Properties.Resources._1_376;
-            this.ClientSize = new System.Drawing.Size(1280, 812);
+            this.ClientSize = new System.Drawing.Size(1280, 820);
+            this.Controls.Add(this.labInfo);
+            this.Controls.Add(this.imageButton_Setup);
             this.Controls.Add(this.label_id_18);
             this.Controls.Add(this.label_id_17);
             this.Controls.Add(this.label_id_16);
@@ -884,6 +919,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox16)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox17)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox18)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imageButton_Setup)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -893,62 +929,64 @@
 
         private System.Windows.Forms.Timer timer_usbDiskCopy;
         private System.Windows.Forms.PictureBox pBox_logo;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.PictureBox pictureBox4;
-        private System.Windows.Forms.PictureBox pictureBox5;
-        private System.Windows.Forms.PictureBox pictureBox6;
-        private System.Windows.Forms.PictureBox pictureBox7;
-        private System.Windows.Forms.PictureBox pictureBox8;
-        private System.Windows.Forms.PictureBox pictureBox9;
-        private System.Windows.Forms.PictureBox pictureBox10;
-        private System.Windows.Forms.PictureBox pictureBox11;
-        private System.Windows.Forms.PictureBox pictureBox12;
+        public System.Windows.Forms.PictureBox pictureBox1;
+        public System.Windows.Forms.PictureBox pictureBox2;
+        public System.Windows.Forms.PictureBox pictureBox3;
+        public System.Windows.Forms.PictureBox pictureBox4;
+        public System.Windows.Forms.PictureBox pictureBox5;
+        public System.Windows.Forms.PictureBox pictureBox6;
+        public System.Windows.Forms.PictureBox pictureBox7;
+        public System.Windows.Forms.PictureBox pictureBox8;
+        public System.Windows.Forms.PictureBox pictureBox9;
+        public System.Windows.Forms.PictureBox pictureBox10;
+        public System.Windows.Forms.PictureBox pictureBox11;
+        public System.Windows.Forms.PictureBox pictureBox12;
         private System.Windows.Forms.ImageButton button1;
-        private System.Windows.Forms.PictureBox pictureBox13;
-        private System.Windows.Forms.PictureBox pictureBox14;
-        private System.Windows.Forms.PictureBox pictureBox15;
-        private System.Windows.Forms.PictureBox pictureBox16;
-        private System.Windows.Forms.PictureBox pictureBox17;
-        private System.Windows.Forms.PictureBox pictureBox18;
-        private System.Windows.Forms.Label label_count_1;
+        public System.Windows.Forms.PictureBox pictureBox13;
+        public System.Windows.Forms.PictureBox pictureBox14;
+        public System.Windows.Forms.PictureBox pictureBox15;
+        public System.Windows.Forms.PictureBox pictureBox16;
+        public System.Windows.Forms.PictureBox pictureBox17;
+        public System.Windows.Forms.PictureBox pictureBox18;
+        public System.Windows.Forms.Label label_count_1;
         private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.Label label_count_2;
-        private System.Windows.Forms.Label label_count_3;
-        private System.Windows.Forms.Label label_count_4;
-        private System.Windows.Forms.Label label_count_5;
-        private System.Windows.Forms.Label label_count_6;
-        private System.Windows.Forms.Label label_count_12;
-        private System.Windows.Forms.Label label_count_11;
-        private System.Windows.Forms.Label label_count_10;
-        private System.Windows.Forms.Label label_count_9;
-        private System.Windows.Forms.Label label_count_8;
-        private System.Windows.Forms.Label label_count_7;
-        private System.Windows.Forms.Label label_count_18;
-        private System.Windows.Forms.Label label_count_17;
-        private System.Windows.Forms.Label label_count_16;
-        private System.Windows.Forms.Label label_count_15;
-        private System.Windows.Forms.Label label_count_14;
-        private System.Windows.Forms.Label label_count_13;
-        private System.Windows.Forms.Label label_id_1;
-        private System.Windows.Forms.Label label_id_2;
-        private System.Windows.Forms.Label label_id_3;
-        private System.Windows.Forms.Label label_id_4;
-        private System.Windows.Forms.Label label_id_5;
-        private System.Windows.Forms.Label label_id_6;
-        private System.Windows.Forms.Label label_id_12;
-        private System.Windows.Forms.Label label_id_11;
-        private System.Windows.Forms.Label label_id_10;
-        private System.Windows.Forms.Label label_id_9;
-        private System.Windows.Forms.Label label_id_8;
-        private System.Windows.Forms.Label label_id_7;
-        private System.Windows.Forms.Label label_id_18;
-        private System.Windows.Forms.Label label_id_17;
-        private System.Windows.Forms.Label label_id_16;
-        private System.Windows.Forms.Label label_id_15;
-        private System.Windows.Forms.Label label_id_14;
-        private System.Windows.Forms.Label label_id_13;
+        public System.Windows.Forms.Label label_count_2;
+        public System.Windows.Forms.Label label_count_3;
+        public System.Windows.Forms.Label label_count_4;
+        public System.Windows.Forms.Label label_count_5;
+        public System.Windows.Forms.Label label_count_6;
+        public System.Windows.Forms.Label label_count_12;
+        public System.Windows.Forms.Label label_count_11;
+        public System.Windows.Forms.Label label_count_10;
+        public System.Windows.Forms.Label label_count_9;
+        public System.Windows.Forms.Label label_count_8;
+        public System.Windows.Forms.Label label_count_7;
+        public System.Windows.Forms.Label label_count_18;
+        public System.Windows.Forms.Label label_count_17;
+        public System.Windows.Forms.Label label_count_16;
+        public System.Windows.Forms.Label label_count_15;
+        public System.Windows.Forms.Label label_count_14;
+        public System.Windows.Forms.Label label_count_13;
+        public System.Windows.Forms.Label label_id_1;
+        public System.Windows.Forms.Label label_id_2;
+        public System.Windows.Forms.Label label_id_3;
+        public System.Windows.Forms.Label label_id_4;
+        public System.Windows.Forms.Label label_id_5;
+        public System.Windows.Forms.Label label_id_6;
+        public System.Windows.Forms.Label label_id_12;
+        public System.Windows.Forms.Label label_id_11;
+        public System.Windows.Forms.Label label_id_10;
+        public System.Windows.Forms.Label label_id_9;
+        public System.Windows.Forms.Label label_id_8;
+        public System.Windows.Forms.Label label_id_7;
+        public System.Windows.Forms.Label label_id_18;
+        public System.Windows.Forms.Label label_id_17;
+        public System.Windows.Forms.Label label_id_16;
+        public System.Windows.Forms.Label label_id_15;
+        public System.Windows.Forms.Label label_id_14;
+        public System.Windows.Forms.Label label_id_13;
+        private System.Windows.Forms.ImageButton imageButton_Setup;
+        public System.Windows.Forms.Label labInfo;
     }
 }
 

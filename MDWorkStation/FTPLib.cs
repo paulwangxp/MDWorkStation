@@ -11,7 +11,6 @@ using System.IO;
 using System.Net;
 using System.Windows.Forms;
 using System.Globalization;
-using System.Net;
 using System.Net.Sockets;
  
 namespace FtpLib
@@ -858,7 +857,8 @@ namespace FtpLib
             }
             catch (Exception ex)
             {
-                Insert_Standard_ErrorLog.Insert("FtpWeb", "Upload Error --> " + ex.Message);
+             
+                LogManager.WriteLog("FtpWeb", "Upload Error --> " + ex.Message);
             }
         }
  
@@ -898,7 +898,7 @@ namespace FtpLib
             }
             catch (Exception ex)
             {
-                Insert_Standard_ErrorLog.Insert("FtpWeb", "Download Error --> " + ex.Message);
+                LogManager.WriteLog("FtpWeb", "Download Error --> " + ex.Message);
             }
         }
  
@@ -931,7 +931,7 @@ namespace FtpLib
             }
             catch (Exception ex)
             {
-                Insert_Standard_ErrorLog.Insert("FtpWeb", "Delete Error --> " + ex.Message + "  文件名:" + fileName);
+                LogManager.WriteLog("FtpWeb", "Delete Error --> " + ex.Message + "  文件名:" + fileName);
             }
         }
  
@@ -963,7 +963,7 @@ namespace FtpLib
             }
             catch (Exception ex)
             {
-                Insert_Standard_ErrorLog.Insert("FtpWeb", "Delete Error --> " + ex.Message + "  文件名:" + folderName);
+                LogManager.WriteLog("FtpWeb", "Delete Error --> " + ex.Message + "  文件名:" + folderName);
             }
         }
  
@@ -1006,7 +1006,7 @@ namespace FtpLib
             catch (Exception ex)
             {
                 downloadFiles = null;
-                Insert_Standard_ErrorLog.Insert("FtpWeb", "GetFilesDetailList Error --> " + ex.Message);
+                LogManager.WriteLog("FtpWeb", "GetFilesDetailList Error --> " + ex.Message);
                 return downloadFiles;
             }
         }
@@ -1059,7 +1059,7 @@ namespace FtpLib
                 downloadFiles = null;
                 if (ex.Message.Trim() != "远程服务器返回错误: (550) 文件不可用(例如，未找到文件，无法访问文件)。")
                 {
-                    Insert_Standard_ErrorLog.Insert("FtpWeb", "GetFileList Error --> " + ex.Message.ToString());
+                    LogManager.WriteLog("FtpWeb", "GetFileList Error --> " + ex.Message.ToString());
                 }
                 return downloadFiles;
             }
@@ -1152,7 +1152,7 @@ namespace FtpLib
             }
             catch (Exception ex)
             {
-                Insert_Standard_ErrorLog.Insert("FtpWeb", "MakeDir Error --> " + ex.Message);
+                LogManager.WriteLog("FtpWeb", "MakeDir Error --> " + ex.Message);
             }
         }
  
@@ -1180,7 +1180,7 @@ namespace FtpLib
             }
             catch (Exception ex)
             {
-                Insert_Standard_ErrorLog.Insert("FtpWeb", "GetFileSize Error --> " + ex.Message);
+                LogManager.WriteLog("FtpWeb", "GetFileSize Error --> " + ex.Message);
             }
             return fileSize;
         }
@@ -1208,7 +1208,7 @@ namespace FtpLib
             }
             catch (Exception ex)
             {
-                Insert_Standard_ErrorLog.Insert("FtpWeb", "ReName Error --> " + ex.Message);
+                LogManager.WriteLog("FtpWeb", "ReName Error --> " + ex.Message);
             }
         }
  
@@ -1293,19 +1293,11 @@ namespace FtpLib
             }
             catch(Exception ex)
             {
-                throw new Exception("删除订单时发生错误，错误信息为：" + ex.Message);
+                throw new Exception("删除时发生错误，错误信息为：" + ex.Message);
             }
         }
     }
  
- 
-    public class Insert_Standard_ErrorLog
-    {
-        public static void Insert(string x, string y)
-        {
- 
-        }
-    }
  
  
 }

@@ -27,7 +27,7 @@ namespace MDWorkStation
         private void Button2_Click(object sender, EventArgs e)
         {
             LogManager.WriteLog("关闭电脑(reset)...");
-            Process.Start("shutdown", "-s -t 60");
+            Process.Start("shutdown", "-r -t 60");
         }
 
         //关闭当前form

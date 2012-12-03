@@ -80,15 +80,8 @@ namespace MDWorkStation
 
                                     //}
 
-                                    //根据盘符获得磁盘信息，并且将此对象放入队列待用
-                                    MDUsb usbDiskObject = new MDUsb();
-                                    if (getDiskInfo(this.Text+"\\", usbDiskObject))
-                                    {
-                                        usbDiskDic.Add(this.Text + "\\", usbDiskObject);//将插入U盘对象放入容器
-                                        writeMsg(usbDiskObject.getDiskInfoStrirng());
-                                    }
-
-                                    writeMsg(this.Text + " 盘系统读取成功");
+                                    //根据盘符获得磁盘信息，在屏幕上显示，并且将此对象放入队列待用
+                                    setUsbInfoToScreen(this.Text+"\\", true);
                                     break;
 
                                 }
@@ -116,8 +109,9 @@ namespace MDWorkStation
                                     vol = (DEV_BROADCAST_VOLUME)Marshal.PtrToStructure(m.LParam, typeof(DEV_BROADCAST_VOLUME));
                                     ID = vol.dbcv_unitmask.ToString("x");
                                     this.Text = IO(ID);
-                                    usbDiskDic.Remove(this.Text + "\\");//将卸载U盘对象从容器移出
-                                    writeMsg(this.Text + " 盘已卸载!");
+
+                                    //根据盘符获得磁盘信息，在屏幕上显示，并且将此对象放入队列待用
+                                    setUsbInfoToScreen(this.Text + "\\", false);
                                     break;
 
                                 }
@@ -264,6 +258,22 @@ namespace MDWorkStation
             return findDisk;
         }
 
+
+        //得到一个驱动器的剩余空间
+        public long getDiskFreeSpace(string DiskName)
+        {
+            DriveInfo[] s = DriveInfo.GetDrives();
+            foreach (DriveInfo myDrive in s)
+            {
+                if (myDrive.Name.Contains(DiskName))
+                {
+                    return myDrive.TotalFreeSpace;
+                }
+            }
+
+            return 0;
+        }
+
         private string[] getUsbDeviceName()
         {
             string []deviceInfo = new string[26];
@@ -345,8 +355,99 @@ namespace MDWorkStation
                 }
             }
         }
-      
+
+        private void setUsbInfoToScreen(string diskName, bool isShow)
+        {
+
+            string currentDriverName = this.Text + "\\";
+            int pos = -1;
+
+            //根据盘符获得磁盘信息，并且将此对象放入队列待用
+            MDUsb usbDiskObject = new MDUsb();
+            if (isShow)//插入U盘
+            {
+                if (getDiskInfo(currentDriverName, usbDiskObject))
+                {
+                    usbDiskDic.Add(currentDriverName, usbDiskObject);//将插入U盘对象放入容器
+                    writeMsg(usbDiskObject.getDiskInfoStrirng());
+                    writeMsg(this.Text + " 成功载入");
+                }
+                else
+                {
+                    writeMsg(this.Text + " 盘内容读取失败！");
+                    return;
+                }
+
+                //  获得当前U盘对应的屏幕位置
+                pos = usbDiskObject.getUsbPos();
+
+            }
+            else//U盘拔出
+            {
+                usbDiskObject = usbDiskDic[currentDriverName];//取出对应的元素
+                //  获得当前U盘对应的屏幕位置
+                pos = usbDiskDic[currentDriverName].getUsbPos();
+                usbDiskObject.setDisconnect(currentDriverName);//拔出时清空数据
+                usbDiskDic.Remove(currentDriverName);
+                writeMsg(this.Text + " 盘已经拔出");
+
+            }
+
+
+            //修改屏幕上的lable信息-------------------------------------------------------
+
+            
+
+            //根据Name获得对应的控件对象
+            string sID = "label_id_" + pos.ToString(); ;
+            string sCount = "label_count_" + pos.ToString();
+            string sPic = "pictureBox" + pos.ToString();
+            System.Reflection.FieldInfo label1 = this.GetType().GetField(sID);//反射
+            System.Reflection.FieldInfo label2 = this.GetType().GetField(sCount);//反射
+            System.Reflection.FieldInfo pic1 = this.GetType().GetField(sPic);//反射
+
+            Label lableID = (Label)label1.GetValue(this);
+            Label lableCount = (Label)label2.GetValue(this);
+            PictureBox pic = (PictureBox)pic1.GetValue(this);
+
+
+            if (isShow)
+            {
+                
+
+                //  获得当前U盘的文件个数
+                int count = usbDiskObject.getFileCount();
+
+                lableCount.Visible = true;
+                lableCount.Text = "0 / " + count.ToString();// 0 / 999
+
+                //  获得当前U盘的设备ID
+                
+                //lableID.Text = usbDiskObject.getDeviceID();// 设备ID： 99999
+                lableID.Text = usbDiskObject.getPoliceID();// 警员编号ID： 99999
+                lableID.Visible = true;
+
+                
+
+                //设置设备颜色为蓝色
+                pic.BackgroundImage = MDWorkStation.Properties.Resources.b3;
+            }
+            else
+            {
+                lableCount.Visible = lableID.Visible = false;
+                pic.BackgroundImage = MDWorkStation.Properties.Resources.b2;//灰色
+
+            }
+
+
+            //修改屏幕上的lable信息-------------------------------------------------------
+
+            if (bFirstRun)//只运行一次
+                StartIdle();
+        }
     }
+       
+      
 
 
 }

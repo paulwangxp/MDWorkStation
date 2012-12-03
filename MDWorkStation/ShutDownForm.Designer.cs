@@ -98,6 +98,7 @@
             this.Controls.Add(this.button1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "ShutDownForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "请选择对应的功能";
             ((System.ComponentModel.ISupportInitialize)(this.button1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Button2)).EndInit();
