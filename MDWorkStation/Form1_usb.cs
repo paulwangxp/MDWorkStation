@@ -424,7 +424,7 @@ namespace MDWorkStation
                 //  获得当前U盘的设备ID
                 
                 //lableID.Text = usbDiskObject.getDeviceID();// 设备ID： 99999
-                lableID.Text = usbDiskObject.getPoliceID();// 警员编号ID： 99999
+                lableID.Text = "编号： " + usbDiskObject.getPoliceID();// 警员编号ID： 99999
                 lableID.Visible = true;
 
                 

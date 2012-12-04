@@ -182,7 +182,7 @@ namespace FtpLib
         /// <summary>
         /// 是否登录
         /// </summary>
-        public bool Connected
+        public bool isConnected
         {
             get
             {
@@ -428,7 +428,8 @@ namespace FtpLib
             if (!bConnected)
             {
                 Connect();
-            }
+            } 
+            SetTransferType(TransferType.Binary);
             string[] strFiles = Dir(strFileNameMask);
             foreach (string strFile in strFiles)
             {

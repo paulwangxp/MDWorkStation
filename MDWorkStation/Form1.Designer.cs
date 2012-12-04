@@ -400,7 +400,7 @@
             this.label_count_3.BackColor = System.Drawing.Color.SlateGray;
             this.label_count_3.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_count_3.ForeColor = System.Drawing.Color.Black;
-            this.label_count_3.Location = new System.Drawing.Point(473, 196);
+            this.label_count_3.Location = new System.Drawing.Point(475, 196);
             this.label_count_3.Name = "label_count_3";
             this.label_count_3.Size = new System.Drawing.Size(118, 29);
             this.label_count_3.TabIndex = 20;
@@ -448,7 +448,7 @@
             this.label_count_12.BackColor = System.Drawing.Color.SlateGray;
             this.label_count_12.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_count_12.ForeColor = System.Drawing.Color.Black;
-            this.label_count_12.Location = new System.Drawing.Point(1077, 389);
+            this.label_count_12.Location = new System.Drawing.Point(1077, 397);
             this.label_count_12.Name = "label_count_12";
             this.label_count_12.Size = new System.Drawing.Size(118, 29);
             this.label_count_12.TabIndex = 29;
@@ -460,7 +460,7 @@
             this.label_count_11.BackColor = System.Drawing.Color.SlateGray;
             this.label_count_11.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_count_11.ForeColor = System.Drawing.Color.Black;
-            this.label_count_11.Location = new System.Drawing.Point(875, 389);
+            this.label_count_11.Location = new System.Drawing.Point(875, 397);
             this.label_count_11.Name = "label_count_11";
             this.label_count_11.Size = new System.Drawing.Size(118, 29);
             this.label_count_11.TabIndex = 28;
@@ -472,7 +472,7 @@
             this.label_count_10.BackColor = System.Drawing.Color.SlateGray;
             this.label_count_10.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_count_10.ForeColor = System.Drawing.Color.Black;
-            this.label_count_10.Location = new System.Drawing.Point(675, 389);
+            this.label_count_10.Location = new System.Drawing.Point(675, 397);
             this.label_count_10.Name = "label_count_10";
             this.label_count_10.Size = new System.Drawing.Size(118, 29);
             this.label_count_10.TabIndex = 27;
@@ -484,7 +484,7 @@
             this.label_count_9.BackColor = System.Drawing.Color.SlateGray;
             this.label_count_9.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_count_9.ForeColor = System.Drawing.Color.Black;
-            this.label_count_9.Location = new System.Drawing.Point(473, 389);
+            this.label_count_9.Location = new System.Drawing.Point(477, 397);
             this.label_count_9.Name = "label_count_9";
             this.label_count_9.Size = new System.Drawing.Size(118, 29);
             this.label_count_9.TabIndex = 26;
@@ -496,7 +496,7 @@
             this.label_count_8.BackColor = System.Drawing.Color.SlateGray;
             this.label_count_8.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_count_8.ForeColor = System.Drawing.Color.Black;
-            this.label_count_8.Location = new System.Drawing.Point(275, 389);
+            this.label_count_8.Location = new System.Drawing.Point(275, 397);
             this.label_count_8.Name = "label_count_8";
             this.label_count_8.Size = new System.Drawing.Size(118, 29);
             this.label_count_8.TabIndex = 25;
@@ -508,7 +508,7 @@
             this.label_count_7.BackColor = System.Drawing.Color.SlateGray;
             this.label_count_7.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_count_7.ForeColor = System.Drawing.Color.Black;
-            this.label_count_7.Location = new System.Drawing.Point(76, 389);
+            this.label_count_7.Location = new System.Drawing.Point(76, 397);
             this.label_count_7.Name = "label_count_7";
             this.label_count_7.Size = new System.Drawing.Size(118, 29);
             this.label_count_7.TabIndex = 24;
@@ -520,7 +520,7 @@
             this.label_count_18.BackColor = System.Drawing.Color.SlateGray;
             this.label_count_18.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_count_18.ForeColor = System.Drawing.Color.Black;
-            this.label_count_18.Location = new System.Drawing.Point(1077, 587);
+            this.label_count_18.Location = new System.Drawing.Point(1077, 596);
             this.label_count_18.Name = "label_count_18";
             this.label_count_18.Size = new System.Drawing.Size(118, 29);
             this.label_count_18.TabIndex = 35;
@@ -532,7 +532,7 @@
             this.label_count_17.BackColor = System.Drawing.Color.SlateGray;
             this.label_count_17.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_count_17.ForeColor = System.Drawing.Color.Black;
-            this.label_count_17.Location = new System.Drawing.Point(875, 587);
+            this.label_count_17.Location = new System.Drawing.Point(875, 596);
             this.label_count_17.Name = "label_count_17";
             this.label_count_17.Size = new System.Drawing.Size(118, 29);
             this.label_count_17.TabIndex = 34;
@@ -544,7 +544,7 @@
             this.label_count_16.BackColor = System.Drawing.Color.SlateGray;
             this.label_count_16.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_count_16.ForeColor = System.Drawing.Color.Black;
-            this.label_count_16.Location = new System.Drawing.Point(675, 587);
+            this.label_count_16.Location = new System.Drawing.Point(675, 596);
             this.label_count_16.Name = "label_count_16";
             this.label_count_16.Size = new System.Drawing.Size(118, 29);
             this.label_count_16.TabIndex = 33;
@@ -556,7 +556,7 @@
             this.label_count_15.BackColor = System.Drawing.Color.SlateGray;
             this.label_count_15.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_count_15.ForeColor = System.Drawing.Color.Black;
-            this.label_count_15.Location = new System.Drawing.Point(473, 587);
+            this.label_count_15.Location = new System.Drawing.Point(473, 596);
             this.label_count_15.Name = "label_count_15";
             this.label_count_15.Size = new System.Drawing.Size(118, 29);
             this.label_count_15.TabIndex = 32;
@@ -568,7 +568,7 @@
             this.label_count_14.BackColor = System.Drawing.Color.SlateGray;
             this.label_count_14.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_count_14.ForeColor = System.Drawing.Color.Black;
-            this.label_count_14.Location = new System.Drawing.Point(275, 587);
+            this.label_count_14.Location = new System.Drawing.Point(275, 596);
             this.label_count_14.Name = "label_count_14";
             this.label_count_14.Size = new System.Drawing.Size(118, 29);
             this.label_count_14.TabIndex = 31;
@@ -580,7 +580,7 @@
             this.label_count_13.BackColor = System.Drawing.Color.SlateGray;
             this.label_count_13.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_count_13.ForeColor = System.Drawing.Color.Black;
-            this.label_count_13.Location = new System.Drawing.Point(76, 587);
+            this.label_count_13.Location = new System.Drawing.Point(76, 596);
             this.label_count_13.Name = "label_count_13";
             this.label_count_13.Size = new System.Drawing.Size(118, 29);
             this.label_count_13.TabIndex = 30;
@@ -592,11 +592,11 @@
             this.label_id_1.BackColor = System.Drawing.Color.Orange;
             this.label_id_1.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_id_1.ForeColor = System.Drawing.Color.Black;
-            this.label_id_1.Location = new System.Drawing.Point(67, 164);
+            this.label_id_1.Location = new System.Drawing.Point(76, 164);
             this.label_id_1.Name = "label_id_1";
-            this.label_id_1.Size = new System.Drawing.Size(137, 19);
+            this.label_id_1.Size = new System.Drawing.Size(117, 19);
             this.label_id_1.TabIndex = 36;
-            this.label_id_1.Text = "编号:11111111";
+            this.label_id_1.Text = "编号:111111";
             // 
             // label_id_2
             // 
@@ -604,11 +604,11 @@
             this.label_id_2.BackColor = System.Drawing.Color.Orange;
             this.label_id_2.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_id_2.ForeColor = System.Drawing.Color.Black;
-            this.label_id_2.Location = new System.Drawing.Point(265, 164);
+            this.label_id_2.Location = new System.Drawing.Point(276, 164);
             this.label_id_2.Name = "label_id_2";
-            this.label_id_2.Size = new System.Drawing.Size(137, 19);
+            this.label_id_2.Size = new System.Drawing.Size(117, 19);
             this.label_id_2.TabIndex = 37;
-            this.label_id_2.Text = "编号:11111111";
+            this.label_id_2.Text = "编号:111111";
             // 
             // label_id_3
             // 
@@ -616,11 +616,11 @@
             this.label_id_3.BackColor = System.Drawing.Color.Orange;
             this.label_id_3.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_id_3.ForeColor = System.Drawing.Color.Black;
-            this.label_id_3.Location = new System.Drawing.Point(465, 164);
+            this.label_id_3.Location = new System.Drawing.Point(474, 164);
             this.label_id_3.Name = "label_id_3";
-            this.label_id_3.Size = new System.Drawing.Size(137, 19);
+            this.label_id_3.Size = new System.Drawing.Size(117, 19);
             this.label_id_3.TabIndex = 38;
-            this.label_id_3.Text = "编号:11111111";
+            this.label_id_3.Text = "编号:111111";
             // 
             // label_id_4
             // 
@@ -628,11 +628,11 @@
             this.label_id_4.BackColor = System.Drawing.Color.Orange;
             this.label_id_4.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_id_4.ForeColor = System.Drawing.Color.Black;
-            this.label_id_4.Location = new System.Drawing.Point(665, 164);
+            this.label_id_4.Location = new System.Drawing.Point(676, 164);
             this.label_id_4.Name = "label_id_4";
-            this.label_id_4.Size = new System.Drawing.Size(137, 19);
+            this.label_id_4.Size = new System.Drawing.Size(117, 19);
             this.label_id_4.TabIndex = 39;
-            this.label_id_4.Text = "编号:11111111";
+            this.label_id_4.Text = "编号:111111";
             // 
             // label_id_5
             // 
@@ -640,11 +640,11 @@
             this.label_id_5.BackColor = System.Drawing.Color.Orange;
             this.label_id_5.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_id_5.ForeColor = System.Drawing.Color.Black;
-            this.label_id_5.Location = new System.Drawing.Point(866, 164);
+            this.label_id_5.Location = new System.Drawing.Point(876, 164);
             this.label_id_5.Name = "label_id_5";
-            this.label_id_5.Size = new System.Drawing.Size(137, 19);
+            this.label_id_5.Size = new System.Drawing.Size(117, 19);
             this.label_id_5.TabIndex = 40;
-            this.label_id_5.Text = "编号:11111111";
+            this.label_id_5.Text = "编号:111111";
             // 
             // label_id_6
             // 
@@ -652,11 +652,11 @@
             this.label_id_6.BackColor = System.Drawing.Color.Orange;
             this.label_id_6.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_id_6.ForeColor = System.Drawing.Color.Black;
-            this.label_id_6.Location = new System.Drawing.Point(1068, 164);
+            this.label_id_6.Location = new System.Drawing.Point(1078, 164);
             this.label_id_6.Name = "label_id_6";
-            this.label_id_6.Size = new System.Drawing.Size(137, 19);
+            this.label_id_6.Size = new System.Drawing.Size(117, 19);
             this.label_id_6.TabIndex = 41;
-            this.label_id_6.Text = "编号:11111111";
+            this.label_id_6.Text = "编号:111111";
             // 
             // label_id_12
             // 
@@ -664,11 +664,11 @@
             this.label_id_12.BackColor = System.Drawing.Color.Orange;
             this.label_id_12.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_id_12.ForeColor = System.Drawing.Color.Black;
-            this.label_id_12.Location = new System.Drawing.Point(1068, 364);
+            this.label_id_12.Location = new System.Drawing.Point(1078, 364);
             this.label_id_12.Name = "label_id_12";
-            this.label_id_12.Size = new System.Drawing.Size(137, 19);
+            this.label_id_12.Size = new System.Drawing.Size(117, 19);
             this.label_id_12.TabIndex = 47;
-            this.label_id_12.Text = "编号:11111111";
+            this.label_id_12.Text = "编号:111111";
             // 
             // label_id_11
             // 
@@ -676,11 +676,11 @@
             this.label_id_11.BackColor = System.Drawing.Color.Orange;
             this.label_id_11.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_id_11.ForeColor = System.Drawing.Color.Black;
-            this.label_id_11.Location = new System.Drawing.Point(866, 364);
+            this.label_id_11.Location = new System.Drawing.Point(876, 364);
             this.label_id_11.Name = "label_id_11";
-            this.label_id_11.Size = new System.Drawing.Size(137, 19);
+            this.label_id_11.Size = new System.Drawing.Size(117, 19);
             this.label_id_11.TabIndex = 46;
-            this.label_id_11.Text = "编号:11111111";
+            this.label_id_11.Text = "编号:111111";
             // 
             // label_id_10
             // 
@@ -688,11 +688,11 @@
             this.label_id_10.BackColor = System.Drawing.Color.Orange;
             this.label_id_10.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_id_10.ForeColor = System.Drawing.Color.Black;
-            this.label_id_10.Location = new System.Drawing.Point(665, 364);
+            this.label_id_10.Location = new System.Drawing.Point(676, 364);
             this.label_id_10.Name = "label_id_10";
-            this.label_id_10.Size = new System.Drawing.Size(137, 19);
+            this.label_id_10.Size = new System.Drawing.Size(117, 19);
             this.label_id_10.TabIndex = 45;
-            this.label_id_10.Text = "编号:11111111";
+            this.label_id_10.Text = "编号:111111";
             // 
             // label_id_9
             // 
@@ -700,11 +700,11 @@
             this.label_id_9.BackColor = System.Drawing.Color.Orange;
             this.label_id_9.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_id_9.ForeColor = System.Drawing.Color.Black;
-            this.label_id_9.Location = new System.Drawing.Point(465, 364);
+            this.label_id_9.Location = new System.Drawing.Point(476, 364);
             this.label_id_9.Name = "label_id_9";
-            this.label_id_9.Size = new System.Drawing.Size(137, 19);
+            this.label_id_9.Size = new System.Drawing.Size(117, 19);
             this.label_id_9.TabIndex = 44;
-            this.label_id_9.Text = "编号:11111111";
+            this.label_id_9.Text = "编号:111111";
             // 
             // label_id_8
             // 
@@ -712,11 +712,11 @@
             this.label_id_8.BackColor = System.Drawing.Color.Orange;
             this.label_id_8.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_id_8.ForeColor = System.Drawing.Color.Black;
-            this.label_id_8.Location = new System.Drawing.Point(265, 364);
+            this.label_id_8.Location = new System.Drawing.Point(276, 364);
             this.label_id_8.Name = "label_id_8";
-            this.label_id_8.Size = new System.Drawing.Size(137, 19);
+            this.label_id_8.Size = new System.Drawing.Size(117, 19);
             this.label_id_8.TabIndex = 43;
-            this.label_id_8.Text = "编号:11111111";
+            this.label_id_8.Text = "编号:111111";
             // 
             // label_id_7
             // 
@@ -724,11 +724,11 @@
             this.label_id_7.BackColor = System.Drawing.Color.Orange;
             this.label_id_7.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_id_7.ForeColor = System.Drawing.Color.Black;
-            this.label_id_7.Location = new System.Drawing.Point(67, 364);
+            this.label_id_7.Location = new System.Drawing.Point(76, 364);
             this.label_id_7.Name = "label_id_7";
-            this.label_id_7.Size = new System.Drawing.Size(137, 19);
+            this.label_id_7.Size = new System.Drawing.Size(117, 19);
             this.label_id_7.TabIndex = 42;
-            this.label_id_7.Text = "编号:11111111";
+            this.label_id_7.Text = "编号:111111";
             // 
             // label_id_18
             // 
@@ -736,11 +736,11 @@
             this.label_id_18.BackColor = System.Drawing.Color.Orange;
             this.label_id_18.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_id_18.ForeColor = System.Drawing.Color.Black;
-            this.label_id_18.Location = new System.Drawing.Point(1068, 564);
+            this.label_id_18.Location = new System.Drawing.Point(1078, 564);
             this.label_id_18.Name = "label_id_18";
-            this.label_id_18.Size = new System.Drawing.Size(137, 19);
+            this.label_id_18.Size = new System.Drawing.Size(117, 19);
             this.label_id_18.TabIndex = 53;
-            this.label_id_18.Text = "编号:11111111";
+            this.label_id_18.Text = "编号:111111";
             // 
             // label_id_17
             // 
@@ -748,11 +748,11 @@
             this.label_id_17.BackColor = System.Drawing.Color.Orange;
             this.label_id_17.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_id_17.ForeColor = System.Drawing.Color.Black;
-            this.label_id_17.Location = new System.Drawing.Point(866, 564);
+            this.label_id_17.Location = new System.Drawing.Point(876, 564);
             this.label_id_17.Name = "label_id_17";
-            this.label_id_17.Size = new System.Drawing.Size(137, 19);
+            this.label_id_17.Size = new System.Drawing.Size(117, 19);
             this.label_id_17.TabIndex = 52;
-            this.label_id_17.Text = "编号:11111111";
+            this.label_id_17.Text = "编号:111111";
             // 
             // label_id_16
             // 
@@ -760,11 +760,11 @@
             this.label_id_16.BackColor = System.Drawing.Color.Orange;
             this.label_id_16.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_id_16.ForeColor = System.Drawing.Color.Black;
-            this.label_id_16.Location = new System.Drawing.Point(665, 564);
+            this.label_id_16.Location = new System.Drawing.Point(676, 564);
             this.label_id_16.Name = "label_id_16";
-            this.label_id_16.Size = new System.Drawing.Size(137, 19);
+            this.label_id_16.Size = new System.Drawing.Size(117, 19);
             this.label_id_16.TabIndex = 51;
-            this.label_id_16.Text = "编号:11111111";
+            this.label_id_16.Text = "编号:111111";
             // 
             // label_id_15
             // 
@@ -772,11 +772,11 @@
             this.label_id_15.BackColor = System.Drawing.Color.Orange;
             this.label_id_15.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_id_15.ForeColor = System.Drawing.Color.Black;
-            this.label_id_15.Location = new System.Drawing.Point(465, 564);
+            this.label_id_15.Location = new System.Drawing.Point(474, 564);
             this.label_id_15.Name = "label_id_15";
-            this.label_id_15.Size = new System.Drawing.Size(137, 19);
+            this.label_id_15.Size = new System.Drawing.Size(117, 19);
             this.label_id_15.TabIndex = 50;
-            this.label_id_15.Text = "编号:11111111";
+            this.label_id_15.Text = "编号:111111";
             // 
             // label_id_14
             // 
@@ -784,11 +784,11 @@
             this.label_id_14.BackColor = System.Drawing.Color.Orange;
             this.label_id_14.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_id_14.ForeColor = System.Drawing.Color.Black;
-            this.label_id_14.Location = new System.Drawing.Point(265, 564);
+            this.label_id_14.Location = new System.Drawing.Point(276, 564);
             this.label_id_14.Name = "label_id_14";
-            this.label_id_14.Size = new System.Drawing.Size(137, 19);
+            this.label_id_14.Size = new System.Drawing.Size(117, 19);
             this.label_id_14.TabIndex = 49;
-            this.label_id_14.Text = "编号:11111111";
+            this.label_id_14.Text = "编号:111111";
             // 
             // label_id_13
             // 
@@ -796,11 +796,11 @@
             this.label_id_13.BackColor = System.Drawing.Color.Orange;
             this.label_id_13.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_id_13.ForeColor = System.Drawing.Color.Black;
-            this.label_id_13.Location = new System.Drawing.Point(67, 564);
+            this.label_id_13.Location = new System.Drawing.Point(77, 564);
             this.label_id_13.Name = "label_id_13";
-            this.label_id_13.Size = new System.Drawing.Size(137, 19);
+            this.label_id_13.Size = new System.Drawing.Size(117, 19);
             this.label_id_13.TabIndex = 48;
-            this.label_id_13.Text = "编号:11111111";
+            this.label_id_13.Text = "编号:111111";
             // 
             // imageButton_Setup
             // 
@@ -822,12 +822,12 @@
             // labInfo
             // 
             this.labInfo.AutoSize = true;
-            this.labInfo.BackColor = System.Drawing.Color.Tan;
-            this.labInfo.Font = new System.Drawing.Font("宋体", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labInfo.ForeColor = System.Drawing.Color.Black;
-            this.labInfo.Location = new System.Drawing.Point(378, 24);
+            this.labInfo.BackColor = System.Drawing.Color.Transparent;
+            this.labInfo.Font = new System.Drawing.Font("黑体", 16F);
+            this.labInfo.ForeColor = System.Drawing.Color.White;
+            this.labInfo.Location = new System.Drawing.Point(876, 42);
             this.labInfo.Name = "labInfo";
-            this.labInfo.Size = new System.Drawing.Size(525, 35);
+            this.labInfo.Size = new System.Drawing.Size(329, 22);
             this.labInfo.TabIndex = 55;
             this.labInfo.Text = "名都执法记录仪采集工作站 V1.0";
             // 

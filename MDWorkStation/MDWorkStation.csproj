@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FFMpegUtility.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -63,6 +64,7 @@
       <DependentUpon>FormPassWord.cs</DependentUpon>
     </Compile>
     <Compile Include="FTPLib.cs" />
+    <Compile Include="HttpWebResponseUtility.cs" />
     <Compile Include="INIFile.cs" />
     <Compile Include="LogManager.cs" />
     <Compile Include="MDUsb.cs" />

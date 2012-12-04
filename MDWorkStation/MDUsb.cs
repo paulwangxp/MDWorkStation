@@ -30,7 +30,6 @@ namespace MDWorkStation
                     isConnected[i] = false;
                 }
             }
-            private static int m_CurrentPos = 1;
 
 
             public static int getUsbPos(string driverName1)
@@ -167,13 +166,13 @@ namespace MDWorkStation
         private string getPoliceIDFromFile(string sFileName)
         {
             string sName = sFileName.Substring(sFileName.LastIndexOf("\\")+1);
-            return sName.Substring(0,6);
+            return sName.Substring(0, sName.Length - 18);//去掉后面14位日期的就是编号
         }
 
         private string getDataTimeFromFile(string sFileName)
         {
-            string sName = sFileName.Substring(sFileName.LastIndexOf("\\" + 1));
-            return sName.Substring(6, 21);
+            string sName = sFileName.Substring(sFileName.Length - 18 );
+            return sName;
         }
 
         public string[] getFileList()
