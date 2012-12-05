@@ -5,108 +5,150 @@ using System.IO;
 
 namespace MDWorkStation
 {
-    
-     
-    public class MDUsb
+    public static class MDUsbPos
     {
+        private static string[] driverName;//驱动名
+        private static int[] pos;//当前位置 1-16
+        private static bool[] isConnected;//是否已经连接上电脑
+        private static bool[] isCompated;
+        private static int size = 16;//当前支持多少个设备
 
-        public static class MDUsbPos
+        static MDUsbPos()//静态构造函数，只被调用一次
         {
-            private static string []driverName;//驱动名
-            private static int[] pos;//当前位置 1-16
-            private static bool[] isConnected;//是否已经连接上电脑
-            private static int size = 16;//当前支持多少个设备
+            driverName = new string[size];
+            pos = new int[size];
+            isConnected = new bool[size];
+            isCompated = new bool[size];
 
-            static MDUsbPos()//静态构造函数，只被调用一次
+            for (int i = 0; i < 16; i++)
             {
-                driverName = new string[size];
-                pos = new int[size];
-                isConnected = new bool[size];
+                driverName[i] = "";
+                pos[i] = 0;
+                isConnected[i] = false;
+                isCompated[i] = false;
+            }
+        }
 
-                for (int i = 0; i < 16; i++)
+
+        public static int getUsbPos(string driverName1)
+        {
+            //先在数组中查找是否有这个驱动名，并且要isConnect = true
+            int i = -1;
+            foreach (string name in driverName)
+            {
+                i++;
+
+                if (name.Contains(driverName1))
+                {
+                    if (isConnected[i])
+                        return pos[i];
+                    else
+                        break;
+                }
+
+            }
+
+
+            //如果没有，那就分配一个位置
+            for (int j = 0; j < size; j++)
+            {
+                if (!isConnected[j])
+                {
+                    isConnected[j] = true;
+                    driverName[j] = driverName1;
+                    pos[j] = j + 1;//位置从1开始
+                    return pos[j];
+                }
+            }
+
+            return -1;
+        }
+
+        //磁盘拔下时必须调用，如果查找不到此盘符此返回false
+        public static bool setDisconnect(string driverName1)
+        {
+
+            int i = -1;
+            foreach (string name in driverName)
+            {
+                i++;
+
+                if (name.Contains(driverName1))
                 {
                     driverName[i] = "";
                     pos[i] = 0;
                     isConnected[i] = false;
+
+                    return true;
                 }
+
             }
 
-
-            public static int getUsbPos(string driverName1)
-            {
-                //先在数组中查找是否有这个驱动名，并且要isConnect = true
-                int i = -1;
-                foreach (string name in driverName)
-                {
-                    i++;
-
-                    if (name.Contains(driverName1))
-                    {
-                        if (isConnected[i])
-                            return pos[i];
-                        else
-                            break;
-                    }
- 
-                }
-
-
-                //如果没有，那就分配一个位置
-                for (int j = 0; j < size; j++)
-                {
-                    if (!isConnected[j])
-                    {
-                        isConnected[j] = true;
-                        driverName[j] = driverName1;
-                        pos[j] = j+1;//位置从1开始
-                        return pos[j];
-                    }
-                }
-
-                return -1;
-            }
-
-            //磁盘拔下时必须调用，如果查找不到此盘符此返回false
-            public static bool setDisconnect(string driverName1)
-            {
-
-                int i = -1;
-                foreach (string name in driverName)
-                {
-                    i++;
-
-                    if (name.Contains(driverName1))
-                    {
-                        driverName[i] = "";
-                        pos[i] = 0;
-                        isConnected[i] = false;
-
-                        return true;
-                    }
-
-                }
-
-                return false;
-            }
-
-            public static bool isConnect(string driverName1)
-            {
-
-                int i = -1;
-                foreach (string name in driverName)
-                {
-                    i++;
-
-                    if (name.Contains(driverName1))
-                    {
-                        return isConnected[i];
-                    }
-
-                }
-
-                return false;
-            }
+            return false;
         }
+
+        
+
+        public static bool isConnect(string driverName1)
+        {
+
+            int i = -1;
+            foreach (string name in driverName)
+            {
+                i++;
+
+                if (name.Contains(driverName1))
+                {
+                    return isConnected[i];
+                }
+
+            }
+
+            return false;
+        }
+
+        public static bool isComplate(string driverName1)
+        {
+
+            int i = -1;
+            foreach (string name in driverName)
+            {
+                i++;
+
+                if (name.Contains(driverName1))
+                {
+                    return isCompated[i];
+                }
+
+            }
+
+            return false;
+        }
+
+        public static void setComplated(string driverName1)
+        {
+            int i = -1;
+            foreach (string name in driverName)
+            {
+                i++;
+
+                if (name.Contains(driverName1))
+                {
+                    isCompated[i] = true;
+                    return;
+
+                }
+
+            }
+
+
+        }
+    }
+     
+    public class MDUsb
+    {
+
+        
 
         public string  driverName/*磁盘驱动器盘符*/;
         public string driverLable/*磁盘卷标*/;
@@ -126,6 +168,7 @@ namespace MDWorkStation
 
         public MDUsb()
         {
+
         }
 
         public string getDiskInfoStrirng()
@@ -160,7 +203,11 @@ namespace MDWorkStation
 
         public string getPoliceID()
         {
-            return getPoliceIDFromFile(m_FileList[0]);
+            if (m_FileList.Count > 0)
+                return getPoliceIDFromFile(m_FileList[0]);
+
+            return "******";
+        
         }
 
         private string getPoliceIDFromFile(string sFileName)
@@ -194,20 +241,5 @@ namespace MDWorkStation
             
         }
 
-        //获得当前USB对应的屏幕位置
-        public int getUsbPos()
-        {
-            return MDUsbPos.getUsbPos(this.driverName);
-        }
-
-        public bool isConnect(string driverName)
-        {
-            return MDUsbPos.isConnect(driverName);
-        }
-
-        public bool setDisconnect(string driverName)
-        {
-            return MDUsbPos.setDisconnect(driverName);
-        }
     }
 }

@@ -53,7 +53,6 @@ namespace MDWorkStation
                         case WM_DEVICECHANGE:
                             break;
                         case DBT_DEVICEARRIVAL://U盘有插入
-                            this.timer_usbDiskCopy.Enabled = true;
                             DriveInfo[] s = DriveInfo.GetDrives();
                             foreach (DriveInfo DriveI in s)
                             {
@@ -137,7 +136,9 @@ namespace MDWorkStation
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                //throw new Exception(ex.Message);
+                MessageBox.Show(ex.Message + "请检查插入的U盘", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LogManager.WriteLog(ex.Message);
             }
             base.WndProc(ref m);
         }
@@ -356,10 +357,23 @@ namespace MDWorkStation
             }
         }
 
+        private int getUsbPos(string driverName)
+        {
+            int i = 0;
+            foreach (MDUsb usbItem in usbDiskDic.Values)
+            {
+                i++;
+                if (usbItem.driverName.Equals(driverName))
+                    return i;
+            }
+
+
+            return -1;
+        }
+
         private void setUsbInfoToScreen(string diskName, bool isShow)
         {
-
-            string currentDriverName = this.Text + "\\";
+            string currentDriverName = diskName;
             int pos = -1;
 
             //根据盘符获得磁盘信息，并且将此对象放入队列待用
@@ -368,28 +382,38 @@ namespace MDWorkStation
             {
                 if (getDiskInfo(currentDriverName, usbDiskObject))
                 {
+
                     usbDiskDic.Add(currentDriverName, usbDiskObject);//将插入U盘对象放入容器
                     writeMsg(usbDiskObject.getDiskInfoStrirng());
-                    writeMsg(this.Text + " 成功载入");
+                    writeMsg(diskName + " 盘 成功载入");
                 }
                 else
                 {
-                    writeMsg(this.Text + " 盘内容读取失败！");
+                    writeMsg(diskName + " 盘 内容读取失败！");
                     return;
                 }
 
+
                 //  获得当前U盘对应的屏幕位置
-                pos = usbDiskObject.getUsbPos();
+                pos = MDUsbPos.getUsbPos(currentDriverName);
 
             }
             else//U盘拔出
             {
-                usbDiskObject = usbDiskDic[currentDriverName];//取出对应的元素
-                //  获得当前U盘对应的屏幕位置
-                pos = usbDiskDic[currentDriverName].getUsbPos();
-                usbDiskObject.setDisconnect(currentDriverName);//拔出时清空数据
-                usbDiskDic.Remove(currentDriverName);
-                writeMsg(this.Text + " 盘已经拔出");
+                if( usbDiskDic.ContainsKey(currentDriverName) )
+                {
+                    usbDiskObject = usbDiskDic[currentDriverName];//取出对应的元素
+                    //  获得当前U盘对应的屏幕位置
+                    pos = MDUsbPos.getUsbPos(currentDriverName);
+                    MDUsbPos.setDisconnect(currentDriverName);//拔出时清空数据
+                    usbDiskDic.Remove(currentDriverName);
+                    
+                }
+
+                if (pos < 0)
+                    return;
+
+                writeMsg(diskName + " 盘已经拔出");
 
             }
 
@@ -418,32 +442,63 @@ namespace MDWorkStation
                 //  获得当前U盘的文件个数
                 int count = usbDiskObject.getFileCount();
 
-                lableCount.Visible = true;
+
+                
                 lableCount.Text = "0 / " + count.ToString();// 0 / 999
+                lableCount.Visible = true;
+                lableCount.Refresh();
+
 
                 //  获得当前U盘的设备ID
                 
                 //lableID.Text = usbDiskObject.getDeviceID();// 设备ID： 99999
                 lableID.Text = "编号： " + usbDiskObject.getPoliceID();// 警员编号ID： 99999
                 lableID.Visible = true;
+                lableID.Refresh();
 
-                
 
                 //设置设备颜色为蓝色
                 pic.BackgroundImage = MDWorkStation.Properties.Resources.b3;
+                pic.Refresh();
             }
             else
             {
                 lableCount.Visible = lableID.Visible = false;
                 pic.BackgroundImage = MDWorkStation.Properties.Resources.b2;//灰色
+                pic.Refresh();
 
             }
 
+            //修改屏幕上的lable信息 end-------------------------------------------------------
 
-            //修改屏幕上的lable信息-------------------------------------------------------
+            return;
+
+            /*
 
             if (bFirstRun)//只运行一次
                 StartIdle();
+
+            return;
+
+
+            if (bFirstRun)
+            {
+
+
+                worker.DoWork += new DoWorkEventHandler(worker_DoWork);
+                worker.ProgressChanged += new ProgressChangedEventHandler(worker_ProgressChanged);
+                worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(worker_RunWorkerCompleted);
+
+                bFirstRun = false;
+
+                return;
+
+            }
+
+            return;
+             * */
+
+            
         }
     }
        
