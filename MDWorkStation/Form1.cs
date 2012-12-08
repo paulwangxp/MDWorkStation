@@ -51,6 +51,7 @@ namespace MDWorkStation
 
             CheckForIllegalCrossThreadCalls = false;
 
+
             workThread = new Thread(new ThreadStart(allOfWork));     
             workThread.Start();
 
@@ -137,7 +138,8 @@ namespace MDWorkStation
         }
 
         private void allOfWork()
-        {            
+        {
+            
 
             while (threadRunFlag)
             {
@@ -157,7 +159,9 @@ namespace MDWorkStation
                         foreach (MDUsb usbItem in usbDiskDic.Values)//遍历整个usb队列
                         {
                             if (MDUsbPos.isComplate(usbItem.driverName))//如果数据已经拷贝完成，就不要再查看了
+                            {
                                 continue;
+                            }
 
                             int uploadSuccessFileNum = 1;
 
@@ -166,7 +170,7 @@ namespace MDWorkStation
                             {
                                 LogManager.WriteLog(usbItem.driverName + " 盘 开始数据拷贝： ");
 
-                                //long f1 = FFMpegUtility.getMediaDruation(usbFileName);
+                                //string f1 = FFMpegUtility.getMediaInfo(@"h:\99999920121203091619.mp4");//获取文件信息
 
 
                                 //得到文件大小，并且判断当前拷贝磁盘是否够用
@@ -257,6 +261,7 @@ namespace MDWorkStation
 
                     LogManager.WriteLog(ex.Message);
                     //MessageBox.Show(ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    continue;
                 }
             }
         }

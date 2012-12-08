@@ -197,8 +197,11 @@ namespace MDWorkStation
 
         public string getDeviceID()
         {
-            return "编号： 908900";
-            return this.diviceID;
+            if (m_FileList.Count > 0)
+                return getDeviceIDFromFile(m_FileList[0]);
+
+            return "******";
+
         }
 
         public string getPoliceID()
@@ -210,16 +213,41 @@ namespace MDWorkStation
         
         }
 
+        public string getDataTime()
+        {
+            if (m_FileList.Count > 0)
+                return getDataTimeFromFile(m_FileList[0]);
+
+            return "00000000000000";
+        }
+
+        private string getDeviceIDFromFile(string sFileName)
+        {
+            string sName = sFileName.Substring(sFileName.LastIndexOf("\\") + 1);
+            //return sName.Substring(0, sName.Length - 18);//去掉后面14位日期的就是编号
+            if (sName.Length < 26)//老文件格式
+                return "******";//A000000
+
+            return sName.Substring(0, 7);//A000000_99999920120101231212.mp4
+        }
+
         private string getPoliceIDFromFile(string sFileName)
         {
             string sName = sFileName.Substring(sFileName.LastIndexOf("\\")+1);
-            return sName.Substring(0, sName.Length - 18);//去掉后面14位日期的就是编号
+            //return sName.Substring(0, sName.Length - 18);//去掉后面14位日期的就是编号
+            if (sName.Length < 26)//老文件格式
+                return sName.Substring(0, 6);//机器编号一定是6位的 99999920120101231212.mp4
+
+            return sName.Substring(8, 6);//A000000_99999920120101231212.mp4
         }
 
         private string getDataTimeFromFile(string sFileName)
         {
-            string sName = sFileName.Substring(sFileName.Length - 18 );
-            return sName;
+            string sName = sFileName.Substring(sFileName.LastIndexOf("\\") + 1);
+            if (sName.Length < 26)//老文件格式
+                return sName.Substring(6, 14);//去掉前面6位的编号，取后面14位
+
+            return sName.Substring(6+8, 14);//去掉前面6位的编号，取后面14位
         }
 
         public string[] getFileList()
