@@ -83,5 +83,35 @@ namespace MDWorkStation
             return totalTime;
  
         }
+
+        public static string getMediaPlayTime(string mediaName)
+        {
+            /**
+              * 支持视频格式：mpeg，mpg，avi，dat，mkv，rmvb，rm，mov.
+              *不支持：wmv
+              * **/
+
+            VideoEncoder.Encoder enc = new VideoEncoder.Encoder();
+            //ffmpeg.exe的路径，程序会在执行目录（....FFmpeg测试\bin\Debug）下找此文件，
+            enc.FFmpegPath = System.Environment.CurrentDirectory + "\\ffmpeg.exe";
+            //视频路径
+            VideoFile videoFile = new VideoFile(mediaName);
+
+            enc.GetVideoInfo(videoFile);
+
+            TimeSpan totaotp = videoFile.Duration;
+            string totalTime = string.Format("{0:00}:{1:00}:{2:00}", (int)totaotp.TotalHours, totaotp.Minutes, totaotp.Seconds);
+
+            Console.WriteLine("时间长度：{0}", totalTime);
+            Console.WriteLine("高度：{0}", videoFile.Height);
+            Console.WriteLine("宽度：{0}", videoFile.Width);
+            Console.WriteLine("数据速率：{0}", videoFile.VideoBitRate);
+            Console.WriteLine("数据格式：{0}", videoFile.VideoFormat);
+            Console.WriteLine("比特率：{0}", videoFile.BitRate);
+            Console.WriteLine("文件路径：{0}", videoFile.Path);
+
+            return totalTime;
+
+        }
     }
 }

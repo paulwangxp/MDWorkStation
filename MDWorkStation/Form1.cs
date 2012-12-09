@@ -38,12 +38,13 @@ namespace MDWorkStation
         public Form1()
         {
             this.WindowState = FormWindowState.Maximized;
+            this.TopMost = false;//界面是否永远在最上层
 
             InitializeComponent();
 
             InitControlPos();//设置各控件的位置，用于不同分辨率的情况
 
-            //StartIdle();//进入自动上传循环中
+            readConfig();//读取配置文件
 
             //string []drivers = getUsbDeviceName();//获得usb的盘符
 
@@ -51,6 +52,8 @@ namespace MDWorkStation
 
             CheckForIllegalCrossThreadCalls = false;
 
+
+            
 
             workThread = new Thread(new ThreadStart(allOfWork));     
             workThread.Start();
@@ -80,13 +83,11 @@ namespace MDWorkStation
             writeMsg("系统初始化成功(Init)...");
 
             //设置开机启动注册表
-            RunWhenStart(true, "MDWorkStation", Application.ExecutablePath);
+            //RunWhenStart(true, "MDWorkStation", Application.ExecutablePath);
         }
 
-        private void StartIdle()
-        {
-            bFirstRun = false;
- 
+        private void readConfig()
+        { 
             //1.读取当前程序配置
             writeMsg("读取配置...");
             INIFile iniObject = new INIFile();
@@ -94,19 +95,12 @@ namespace MDWorkStation
             m_DataPathStr = iniObject.IniReadValue("config", "Path","\\Data");
 
             m_UploadFlag = iniObject.IniReadValue("config", "UploadFlag", "0") == "0" ? false : true;
-            m_interfaceStr = iniObject.IniReadValue("config", "UploadInterface", "http://127.0.0.1/");
+            m_interfaceStr = iniObject.IniReadValue("config", "UploadInterface", "http://127.0.0.1//interfaceAction.do");
             m_ftpSever = iniObject.IniReadValue("config", "FtpSever", "127.0.0.1");
             m_ftpPort = iniObject.IniReadValue("config", "FtpPort", "21");
             m_ftpUser = iniObject.IniReadValue("config", "FtpUser", "test1");
             m_ftpPwd = iniObject.IniReadValue("config", "FtpPwd", "test1");
             m_WorkStationID = iniObject.IniReadValue("config", "MachineID", "778899");
-            //2.开启windows消息处理，查找U盘变化
-            //发现有设备插入，读取盘符，压入队列
-            
-
-            //3.启动定时器，读取队列磁盘
-            timer_usbDiskCopy.Interval = 1000;
-            timer_usbDiskCopy.Enabled = true;
             
 
         }
@@ -152,10 +146,25 @@ namespace MDWorkStation
                     Directory.CreateDirectory(sDir);//创建文件夹，\Data\2012\201211\20121101
 
 
+
                 try
                 {
                     if (usbDiskDic.Count > 0)
                     {
+                        FTPClient ftpClient = null;
+                        if (m_UploadFlag)
+                        {
+                            ftpClient = new FTPClient(m_ftpSever, "\\", m_ftpUser, m_ftpPwd, int.Parse(m_ftpPort));
+                            if (!ftpClient.isConnected)
+                            {
+                                writeMsg("错误，无法连接到FTP服务器");
+                                continue;
+                            }
+                            ftpClient.SetTransferType(FTPClient.TransferType.Binary);
+
+                        }
+
+
                         foreach (MDUsb usbItem in usbDiskDic.Values)//遍历整个usb队列
                         {
                             if (MDUsbPos.isComplate(usbItem.driverName))//如果数据已经拷贝完成，就不要再查看了
@@ -181,7 +190,7 @@ namespace MDWorkStation
                                 {
                                     writeMsg("错误，磁盘空间不足，停止拷贝！");
                                     //timer_usbDiskCopy.Enabled = true;
-                                    return;
+                                    break;
                                 }
 
 
@@ -193,32 +202,57 @@ namespace MDWorkStation
 
                                 if (m_UploadFlag)
                                 {
-                                    //通过FTP上传至平台服务器
-                                    FTPClient ftpClient = new FTPClient(m_ftpSever, "\\", m_ftpUser, m_ftpPwd, int.Parse(m_ftpPort));
-                                    if (!ftpClient.isConnected)
-                                    {
-                                        writeMsg("错误，无法连接到FTP服务器");
-                                        break;
-                                    }
 
-                                    //切换到按日期的工作目录
-                                    ftpClient.ChDir("");
+                                    //从接口获取文件FTP的上传路径
+                                    string interface_Ftp = m_interfaceStr + "?method=getFtpPath";
+                                    string interface_Upload = m_interfaceStr + "?method=uploadFile";
+                                    string responseText = "";
+                                    string removeDir = "";//服务器返回的FTP文件存放路径
+                                    string removeFileName = "";//上传到FTP上的文件绝对路径 1/101/103/11.mp4
+                                    if (HttpWebResponseUtility.getFtpDirRequestStatusCode(interface_Ftp, usbItem.getPoliceID(), out removeDir)
+                                        != System.Net.HttpStatusCode.OK)
+                                    {
+
+                                        //接口调用失败，停止下面的工作，直接退出
+                                        writeMsg("错误，路径接口调用失败，请检查网络及服务器！");
+                                        break;
+                                    }                                                                                                          
+
+
+                                    //通过FTP上传至平台服务器
+                                    //FTPClient ftpClient = new FTPClient(m_ftpSever, "\\", m_ftpUser, m_ftpPwd, int.Parse(m_ftpPort));
+                                    //if (!ftpClient.isConnected)
+                                    //{
+                                    //    writeMsg("错误，无法连接到FTP服务器");
+                                    //    break;
+                                    //}
+
+                                    //根据接口返回，创建FTP目录 removeDir todo
+
+                                    //切换到服务器接口返回的工作目录
+                                    ftpClient.ChDir(removeDir);
 
                                     //上传文件
                                     ftpClient.Put(localFileName);//工作站中的文件，防止U盘被拔掉
 
+                                    ftpClient.DisConnect();
+
                                     //获得文件的播放时间
-                                    long fileDuration = 0;
+                                    //string s1 = FFMpegUtility.getMediaPlayTime(@"E:\company\MD\自动上传软件\执法记录仪资料\HA30000_00000020121209203538.WAV");
+                                    //s1 = FFMpegUtility.getMediaPlayTime(@"E:\company\MD\自动上传软件\执法记录仪资料\HA30000_00000020121209203527.mp4");
+                
+                                    string fileDuration = FFMpegUtility.getMediaPlayTime(localFileName);
 
                                     //调用平台上传接口
-                                    if (HttpWebResponseUtility.getUrlRequestStatusCode(m_interfaceStr, usbItem.getPoliceID(), m_WorkStationID,
-                                        localFileName, localFileName.Substring(localFileName.Length - 14), fileInfo.Length.ToString(), fileDuration.ToString())
+                                    if (HttpWebResponseUtility.getUrlRequestStatusCode(interface_Upload, usbItem.getPoliceID(), m_WorkStationID,
+                                        localFileName, removeFileName, usbItem.getDataTime(), fileInfo.Length.ToString(), fileDuration,
+                                        out responseText)
                                         != System.Net.HttpStatusCode.OK)
                                     {
 
                                         //接口调用失败，停止下面的工作，直接退出
                                         writeMsg("错误，上传接口调用失败，请检查网络及服务器！");
-                                        return;
+                                        break;
 
                                     }
                                 }
@@ -270,6 +304,7 @@ namespace MDWorkStation
         private void timer_usbDiskCopy_Tick(object sender, EventArgs e)
         {
             timer_usbDiskCopy.Enabled = false;
+            return;
 
             allOfWork();
             
@@ -280,6 +315,34 @@ namespace MDWorkStation
         //进入关机等功能
         private void imageButton_Setup_Click(object sender, EventArgs e)
         {
+
+            //从接口获取文件FTP的上传路径
+            //string interface_Ftp = m_interfaceStr + "?method=getFtpPath";
+            //string interface_Upload = m_interfaceStr + "?method=uploadFile";
+            //string responseText = "";
+            //string removeDir = "";//服务器返回的FTP文件存放路径
+            ////if (HttpWebResponseUtility.getFtpDirRequestStatusCode(interface_Ftp, "010101", out responseText)
+            ////    != System.Net.HttpStatusCode.OK)
+            ////{
+
+            ////    //接口调用失败，停止下面的工作，直接退出
+            ////    writeMsg("错误，路径接口调用失败，请检查网络及服务器！");
+            ////    return;
+            ////}
+
+            //if (HttpWebResponseUtility.getUrlRequestStatusCode(interface_Upload, "010101", "010101",
+            //                            "1.wav", "1/101/103/22.mp4", "20121210232323", "128", "30",
+            //                            out responseText)
+            //                            != System.Net.HttpStatusCode.OK)
+            //{
+
+            //    //接口调用失败，停止下面的工作，直接退出
+            //    writeMsg("错误，上传接口调用失败，请检查网络及服务器！");
+            //    return;
+
+            //}
+
+
             FormPassWord form2 = new FormPassWord();
             DialogResult result = form2.ShowDialog();
             if (result == System.Windows.Forms.DialogResult.Cancel)

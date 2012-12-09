@@ -437,6 +437,7 @@ namespace MDWorkStation
 
             if (isShow)
             {
+
                 
 
                 //  获得当前U盘的文件个数
@@ -452,7 +453,10 @@ namespace MDWorkStation
                 //  获得当前U盘的设备ID
                 
                 //lableID.Text = usbDiskObject.getDeviceID();// 设备ID： 99999
-                lableID.Text = "编号： " + usbDiskObject.getPoliceID();// 警员编号ID： 99999
+                //lableID.Text = "编号： " + usbDiskObject.getPoliceID();// 警员编号ID： 99999
+                lableID.Text = "编号： " + usbDiskObject.getDeviceID();// 设备编号ID： A000022
+                string id1 = usbDiskObject.getPoliceID();
+                string id2 = usbDiskObject.getDataTime();
                 lableID.Visible = true;
                 lableID.Refresh();
 

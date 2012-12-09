@@ -228,7 +228,7 @@ namespace MDWorkStation
             if (sName.Length < 26)//老文件格式
                 return "******";//A000000
 
-            return sName.Substring(0, 7);//A000000_99999920120101231212.mp4
+            return sName.Substring(0, sName.IndexOf("_"));//A000000_99999920120101231212.mp4
         }
 
         private string getPoliceIDFromFile(string sFileName)
@@ -238,7 +238,8 @@ namespace MDWorkStation
             if (sName.Length < 26)//老文件格式
                 return sName.Substring(0, 6);//机器编号一定是6位的 99999920120101231212.mp4
 
-            return sName.Substring(8, 6);//A000000_99999920120101231212.mp4
+            //return sName.Substring(8, 6);//A000000_99999920120101231212.mp4
+            return sName.Substring(sName.IndexOf("_")+1, 6);//A000000_99999920120101231212.mp4
         }
 
         private string getDataTimeFromFile(string sFileName)
@@ -247,7 +248,7 @@ namespace MDWorkStation
             if (sName.Length < 26)//老文件格式
                 return sName.Substring(6, 14);//去掉前面6位的编号，取后面14位
 
-            return sName.Substring(6+8, 14);//去掉前面6位的编号，取后面14位
+            return sName.Substring(sName.IndexOf("_") + 1 + 6, 14);//去掉前面6位的编号，取后面14位
         }
 
         public string[] getFileList()
