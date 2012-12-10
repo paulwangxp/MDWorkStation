@@ -8,8 +8,9 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using Microsoft.Win32;
 using System.IO;
-using MDWorkStation.FtpLib;
+//using MDWorkStation.FtpLib;
 using System.Threading;
+using MDWorkStation.LightFTP;
 
 namespace MDWorkStation
 {
@@ -22,6 +23,7 @@ namespace MDWorkStation
         bool bFirstRun = true;
         bool threadRunFlag = true;
 
+        bool m_topMost = false;//界面是否在最上层
         bool m_hasDriver = false;//是否是有驱动版本        
         string m_DataPathStr = "";//随时录数据保存路径
 
@@ -91,8 +93,10 @@ namespace MDWorkStation
             //1.读取当前程序配置
             writeMsg("读取配置...");
             INIFile iniObject = new INIFile();
+
+            m_topMost = iniObject.IniReadValue("config", "TopMost", "0") == "0" ? false : true;
             m_hasDriver = iniObject.IniReadValue("config", "Driver", "0") == "0" ? false:true;
-            m_DataPathStr = iniObject.IniReadValue("config", "Path","\\Data");
+            m_DataPathStr = iniObject.IniReadValue("config", "Path","\\Data");//目录不允许设置保存路径
 
             m_UploadFlag = iniObject.IniReadValue("config", "UploadFlag", "0") == "0" ? false : true;
             m_interfaceStr = iniObject.IniReadValue("config", "UploadInterface", "http://127.0.0.1//interfaceAction.do");
@@ -101,6 +105,9 @@ namespace MDWorkStation
             m_ftpUser = iniObject.IniReadValue("config", "FtpUser", "test1");
             m_ftpPwd = iniObject.IniReadValue("config", "FtpPwd", "test1");
             m_WorkStationID = iniObject.IniReadValue("config", "MachineID", "778899");
+
+            if (m_topMost)
+                this.TopMost = true;
             
 
         }
@@ -149,18 +156,19 @@ namespace MDWorkStation
 
                 try
                 {
-                    if (usbDiskDic.Count > 0)
+                    if (usbDiskDic.Count >= 0)
                     {
-                        FTPClient ftpClient = null;
+                        FtpClient ftpClient = null;
                         if (m_UploadFlag)
                         {
-                            ftpClient = new FTPClient(m_ftpSever, "\\", m_ftpUser, m_ftpPwd, int.Parse(m_ftpPort));
-                            if (!ftpClient.isConnected)
-                            {
-                                writeMsg("错误，无法连接到FTP服务器");
-                                continue;
-                            }
-                            ftpClient.SetTransferType(FTPClient.TransferType.Binary);
+                            ftpClient = new FtpClient(m_ftpSever, m_ftpUser, m_ftpPwd, 120, int.Parse(m_ftpPort));
+                            ftpClient.Login();
+                            ftpClient.Upload(@"E:\company\MD\自动上传软件\执法记录仪资料\mp4\0218620121203103434.mp4");
+                            //string []list = ftpClient.Dir("111.mp4");
+                            
+                            //ftpClient.SetTransferType(FTPClient.TransferType.Binary);
+
+                            //ftpClient.Put(@"E:\company\MD\自动上传软件\执法记录仪资料\mp4\0218620121203103434.mp4");
 
                         }
 
@@ -230,12 +238,12 @@ namespace MDWorkStation
                                     //根据接口返回，创建FTP目录 removeDir todo
 
                                     //切换到服务器接口返回的工作目录
-                                    ftpClient.ChDir(removeDir);
+                                    ftpClient.ChangeDir(removeDir);
 
                                     //上传文件
-                                    ftpClient.Put(localFileName);//工作站中的文件，防止U盘被拔掉
+                                    ftpClient.Upload(localFileName);//工作站中的文件，防止U盘被拔掉
 
-                                    ftpClient.DisConnect();
+                                    ftpClient.Close();
 
                                     //获得文件的播放时间
                                     //string s1 = FFMpegUtility.getMediaPlayTime(@"E:\company\MD\自动上传软件\执法记录仪资料\HA30000_00000020121209203538.WAV");
@@ -306,7 +314,6 @@ namespace MDWorkStation
             timer_usbDiskCopy.Enabled = false;
             return;
 
-            allOfWork();
             
             timer_usbDiskCopy.Enabled = true;
 

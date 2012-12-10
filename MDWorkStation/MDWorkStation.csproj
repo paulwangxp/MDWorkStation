@@ -67,8 +67,10 @@
       <DependentUpon>FormPassWord.cs</DependentUpon>
     </Compile>
     <Compile Include="FTPLib.cs" />
+    <Compile Include="FtpUtility.cs" />
     <Compile Include="HttpWebResponseUtility.cs" />
     <Compile Include="INIFile.cs" />
+    <Compile Include="LightFTPClient.cs" />
     <Compile Include="LogManager.cs" />
     <Compile Include="MDUsb.cs" />
     <Compile Include="Program.cs" />
