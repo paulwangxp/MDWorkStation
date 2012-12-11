@@ -89,6 +89,7 @@
             this.label_id_13 = new System.Windows.Forms.Label();
             this.imageButton_Setup = new System.Windows.Forms.ImageButton();
             this.labInfo = new System.Windows.Forms.Label();
+            this.pBox_desc = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pBox_logo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -110,6 +111,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox17)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox18)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageButton_Setup)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pBox_desc)).BeginInit();
             this.SuspendLayout();
             // 
             // timer_usbDiskCopy
@@ -278,7 +280,7 @@
             this.button1.DownImage = global::MDWorkStation.Properties.Resources.c3;
             this.button1.Font = new System.Drawing.Font("宋体", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.button1.HoverImage = global::MDWorkStation.Properties.Resources.c2;
-            this.button1.Location = new System.Drawing.Point(1070, 713);
+            this.button1.Location = new System.Drawing.Point(1070, 918);
             this.button1.Name = "button1";
             this.button1.NormalImage = global::MDWorkStation.Properties.Resources.c1;
             this.button1.Size = new System.Drawing.Size(148, 60);
@@ -374,12 +376,13 @@
             // 
             // listBox1
             // 
+            this.listBox1.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.listBox1.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.listBox1.FormattingEnabled = true;
             this.listBox1.ItemHeight = 19;
-            this.listBox1.Location = new System.Drawing.Point(52, 693);
+            this.listBox1.Location = new System.Drawing.Point(397, 822);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(566, 80);
+            this.listBox1.Size = new System.Drawing.Size(556, 156);
             this.listBox1.TabIndex = 18;
             // 
             // label_count_2
@@ -809,7 +812,7 @@
             this.imageButton_Setup.DownImage = global::MDWorkStation.Properties.Resources.c3;
             this.imageButton_Setup.Font = new System.Drawing.Font("宋体", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.imageButton_Setup.HoverImage = global::MDWorkStation.Properties.Resources.c2;
-            this.imageButton_Setup.Location = new System.Drawing.Point(855, 713);
+            this.imageButton_Setup.Location = new System.Drawing.Point(1070, 822);
             this.imageButton_Setup.Name = "imageButton_Setup";
             this.imageButton_Setup.NormalImage = global::MDWorkStation.Properties.Resources.c1;
             this.imageButton_Setup.Size = new System.Drawing.Size(148, 60);
@@ -831,12 +834,24 @@
             this.labInfo.TabIndex = 55;
             this.labInfo.Text = "名都执法记录仪采集工作站 V1.0";
             // 
+            // pBox_desc
+            // 
+            this.pBox_desc.BackColor = System.Drawing.Color.Transparent;
+            this.pBox_desc.BackgroundImage = global::MDWorkStation.Properties.Resources.介绍文字;
+            this.pBox_desc.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pBox_desc.Location = new System.Drawing.Point(52, 822);
+            this.pBox_desc.Name = "pBox_desc";
+            this.pBox_desc.Size = new System.Drawing.Size(196, 156);
+            this.pBox_desc.TabIndex = 56;
+            this.pBox_desc.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::MDWorkStation.Properties.Resources._1_376;
-            this.ClientSize = new System.Drawing.Size(1280, 820);
+            this.ClientSize = new System.Drawing.Size(1280, 1024);
+            this.Controls.Add(this.pBox_desc);
             this.Controls.Add(this.labInfo);
             this.Controls.Add(this.imageButton_Setup);
             this.Controls.Add(this.label_id_18);
@@ -920,6 +935,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox17)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox18)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageButton_Setup)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pBox_desc)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -987,6 +1003,7 @@
         public System.Windows.Forms.Label label_id_13;
         private System.Windows.Forms.ImageButton imageButton_Setup;
         public System.Windows.Forms.Label labInfo;
+        private System.Windows.Forms.PictureBox pBox_desc;
     }
 }
 

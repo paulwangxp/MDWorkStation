@@ -102,13 +102,13 @@ namespace MDWorkStation
             TimeSpan totaotp = videoFile.Duration;
             string totalTime = string.Format("{0:00}:{1:00}:{2:00}", (int)totaotp.TotalHours, totaotp.Minutes, totaotp.Seconds);
 
-            Console.WriteLine("时间长度：{0}", totalTime);
-            Console.WriteLine("高度：{0}", videoFile.Height);
-            Console.WriteLine("宽度：{0}", videoFile.Width);
-            Console.WriteLine("数据速率：{0}", videoFile.VideoBitRate);
-            Console.WriteLine("数据格式：{0}", videoFile.VideoFormat);
-            Console.WriteLine("比特率：{0}", videoFile.BitRate);
-            Console.WriteLine("文件路径：{0}", videoFile.Path);
+            //Console.WriteLine("时间长度：{0}", totalTime);
+            //Console.WriteLine("高度：{0}", videoFile.Height);
+            //Console.WriteLine("宽度：{0}", videoFile.Width);
+            //Console.WriteLine("数据速率：{0}", videoFile.VideoBitRate);
+            //Console.WriteLine("数据格式：{0}", videoFile.VideoFormat);
+            //Console.WriteLine("比特率：{0}", videoFile.BitRate);
+            //Console.WriteLine("文件路径：{0}", videoFile.Path);
 
             return totalTime;
 

@@ -137,8 +137,7 @@ namespace MDWorkStation
             catch (Exception ex)
             {
                 //throw new Exception(ex.Message);
-                MessageBox.Show(ex.Message + "请检查插入的U盘", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                LogManager.WriteLog(ex.Message);
+                LogManager.showErrorMsg(ex.Message + "请检查插入的U盘");
             }
             base.WndProc(ref m);
         }

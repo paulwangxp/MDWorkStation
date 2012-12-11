@@ -1102,19 +1102,25 @@ namespace MDWorkStation
 
             private void showMessage(string message, Boolean error)
             {
+                if (error)
+                    LogManager.WriteErrorLog(message);
+                else
+                    LogManager.WriteLog(message);
+                
+
                 return;
 
-                System.Windows.Forms.ListViewItem lvItem = new System.Windows.Forms.ListViewItem(message.Replace("\r", "").Replace("\n", ""), 0);
+                //System.Windows.Forms.ListViewItem lvItem = new System.Windows.Forms.ListViewItem(message.Replace("\r", "").Replace("\n", ""), 0);
 
-                if (error)
-                {
-                    lvItem.Font = new System.Drawing.Font(lvItem.Font, lvItem.Font.Style | System.Drawing.FontStyle.Bold);
-                    lvItem.ForeColor = System.Drawing.Color.Red;
-                }
-                lstMessage.Items.Add(lvItem);
-                lstMessage.EnsureVisible(lstMessage.Items.Count - 1);
-                lstMessage.Invalidate();
-                lstMessage.Update();
+                //if (error)
+                //{
+                //    lvItem.Font = new System.Drawing.Font(lvItem.Font, lvItem.Font.Style | System.Drawing.FontStyle.Bold);
+                //    lvItem.ForeColor = System.Drawing.Color.Red;
+                //}
+                //lstMessage.Items.Add(lvItem);
+                //lstMessage.EnsureVisible(lstMessage.Items.Count - 1);
+                //lstMessage.Invalidate();
+                //lstMessage.Update();
             }
 
 

@@ -69,6 +69,11 @@ namespace MDWorkStation
             WriteLog(LogFile.Trace.ToString(), msg);
         }
 
+        public static void WriteErrorLog(string msg)
+        {
+            WriteLog(LogFile.Error.ToString(), msg);
+        }
+
 
         public static void showErrorMsg(string msg)
         {

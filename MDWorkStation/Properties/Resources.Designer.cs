@@ -115,5 +115,12 @@ namespace MDWorkStation.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        internal static System.Drawing.Bitmap 介绍文字 {
+            get {
+                object obj = ResourceManager.GetObject("介绍文字", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

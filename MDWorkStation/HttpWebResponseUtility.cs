@@ -143,6 +143,8 @@ namespace MDWorkStation
                                                                 string uploadName/*上传文件名号*/, string uploadPath/*上传路径*/,string createTime/*文件创建时间*/,
                                                                 string fileSize/*文件大小*/, string fileTime/*文件时长*/, out string responseText)
         {
+
+            //return “0;/1/101/103/” 表示成功 或者 “1;失败信息”
             string tagUrl = methodUrl + "&userCode=" + userCode + "&editCode=" + editCode + "&uploadName=" + uploadName
                              + "&filePath=" + uploadPath + "&createTime=" + createTime + "&fileSize=" + fileSize + "&fileTime=" + fileTime;
             CookieCollection cookies = new CookieCollection();//如何从response.Headers["Set-Cookie"];中获取并设置CookieCollection的代码略  
@@ -155,7 +157,6 @@ namespace MDWorkStation
             resStream.Close();//关闭当前流并释放与之关联的所有资源
             sr.Close();
 
-            MessageBox.Show(responseText);
 
             return response.StatusCode; 
 
@@ -163,7 +164,7 @@ namespace MDWorkStation
 
         public static HttpStatusCode getFtpDirRequestStatusCode(string methodUrl, string userCode/*上传人编号*/, out string responseText)
         {
-            //return 0;/1/101/103/ 1;失败信息
+            //return “0;/1/101/103/” 表示成功 或者 “1;失败信息”
 
             string tagUrl = methodUrl + "&userCode=" + userCode;
             CookieCollection cookies = new CookieCollection();
@@ -177,7 +178,6 @@ namespace MDWorkStation
             resStream.Close();//关闭当前流并释放与之关联的所有资源
             sr.Close();
 
-            MessageBox.Show(responseText);
 
             return response.StatusCode; 
         }

@@ -66,8 +66,6 @@
     <Compile Include="FormPassWord.Designer.cs">
       <DependentUpon>FormPassWord.cs</DependentUpon>
     </Compile>
-    <Compile Include="FTPLib.cs" />
-    <Compile Include="FtpUtility.cs" />
     <Compile Include="HttpWebResponseUtility.cs" />
     <Compile Include="INIFile.cs" />
     <Compile Include="LightFTPClient.cs" />
@@ -118,6 +116,8 @@
     <None Include="images\1_376.gif" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="images\介绍文字.png" />
+    <None Include="Resources\介绍文字.png" />
     <None Include="images\c1.png" />
     <None Include="images\c2.png" />
     <None Include="images\c3.png" />

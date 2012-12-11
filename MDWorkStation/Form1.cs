@@ -140,6 +140,9 @@ namespace MDWorkStation
 
         private void allOfWork()
         {
+
+            FtpClient ftpClient = new FtpClient(m_ftpSever, m_ftpUser, m_ftpPwd, 120, int.Parse(m_ftpPort));
+            
             
 
             while (threadRunFlag)
@@ -158,18 +161,15 @@ namespace MDWorkStation
                 {
                     if (usbDiskDic.Count >= 0)
                     {
-                        FtpClient ftpClient = null;
+                        
                         if (m_UploadFlag)
                         {
-                            ftpClient = new FtpClient(m_ftpSever, m_ftpUser, m_ftpPwd, 120, int.Parse(m_ftpPort));
                             ftpClient.Login();
-                            ftpClient.Upload(@"E:\company\MD\自动上传软件\执法记录仪资料\mp4\0218620121203103434.mp4");
-                            //string []list = ftpClient.Dir("111.mp4");
                             
-                            //ftpClient.SetTransferType(FTPClient.TransferType.Binary);
-
-                            //ftpClient.Put(@"E:\company\MD\自动上传软件\执法记录仪资料\mp4\0218620121203103434.mp4");
-
+                            //ftpClient.Download("0218620121203103434.mp4", "123.mp4", true);//断点下载
+                            //LogManager.WriteLog("正在上传文件: " + );
+                            //ftpClient.Upload(@"E:\company\MD\自动上传软件\执法记录仪资料\mp4\0218620121203103434.mp4",true);//断点续传
+                            
                         }
 
 
@@ -223,32 +223,27 @@ namespace MDWorkStation
 
                                         //接口调用失败，停止下面的工作，直接退出
                                         writeMsg("错误，路径接口调用失败，请检查网络及服务器！");
-                                        break;
-                                    }                                                                                                          
+                                        continue;
+                                    }
+                                    string[] list1 = removeDir.Split(',');
+                                    if (!list1[0].Equals("0"))
+                                    {
+                                        LogManager.showErrorMsg("错误，"+ list1[1]);
+                                        continue;
+                                    }
 
+                                    removeDir = list1[1];
 
-                                    //通过FTP上传至平台服务器
-                                    //FTPClient ftpClient = new FTPClient(m_ftpSever, "\\", m_ftpUser, m_ftpPwd, int.Parse(m_ftpPort));
-                                    //if (!ftpClient.isConnected)
-                                    //{
-                                    //    writeMsg("错误，无法连接到FTP服务器");
-                                    //    break;
-                                    //}
-
-                                    //根据接口返回，创建FTP目录 removeDir todo
 
                                     //切换到服务器接口返回的工作目录
                                     ftpClient.ChangeDir(removeDir);
 
                                     //上传文件
-                                    ftpClient.Upload(localFileName);//工作站中的文件，防止U盘被拔掉
-
-                                    ftpClient.Close();
+                                    LogManager.WriteLog("正在上传文件: " + localFileName);
+                                    ftpClient.Upload(localFileName);//使用工作站中的文件上传，防止U盘被拔掉
+                                   
 
                                     //获得文件的播放时间
-                                    //string s1 = FFMpegUtility.getMediaPlayTime(@"E:\company\MD\自动上传软件\执法记录仪资料\HA30000_00000020121209203538.WAV");
-                                    //s1 = FFMpegUtility.getMediaPlayTime(@"E:\company\MD\自动上传软件\执法记录仪资料\HA30000_00000020121209203527.mp4");
-                
                                     string fileDuration = FFMpegUtility.getMediaPlayTime(localFileName);
 
                                     //调用平台上传接口
@@ -260,16 +255,23 @@ namespace MDWorkStation
 
                                         //接口调用失败，停止下面的工作，直接退出
                                         writeMsg("错误，上传接口调用失败，请检查网络及服务器！");
-                                        break;
+                                        continue;
 
                                     }
+                                    string[] list2 = responseText.Split(',');
+                                    if (!responseText[0].Equals("0"))
+                                    {
+                                        LogManager.showErrorMsg("错误，" + responseText[1]);
+                                        continue;
+                                    }
+
                                 }
 
                                 //删除源文件
                                 LogManager.WriteLog("正在删除数据： " + usbFileName);
                                 File.Delete(usbFileName);
 
-                                //根据Name获得对应的控件对象
+                                //根据Name获得对应的控件对象,修改屏幕显示进度内容
                                 int pos = MDUsbPos.getUsbPos(usbItem.driverName);
                                 string sCount = "label_count_" + pos.ToString();
                                 System.Reflection.FieldInfo label2 = this.GetType().GetField(sCount);//反射
@@ -302,7 +304,6 @@ namespace MDWorkStation
                 {
 
                     LogManager.WriteLog(ex.Message);
-                    //MessageBox.Show(ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     continue;
                 }
             }
