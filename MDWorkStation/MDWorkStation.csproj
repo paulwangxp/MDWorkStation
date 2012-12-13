@@ -117,7 +117,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="images\介绍文字.png" />
-    <None Include="Resources\介绍文字.png" />
     <None Include="images\c1.png" />
     <None Include="images\c2.png" />
     <None Include="images\c3.png" />
@@ -125,6 +124,9 @@
     <None Include="images\b1.png" />
     <None Include="images\b3.png" />
     <Content Include="images\logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -85,7 +85,7 @@ namespace MDWorkStation
             writeMsg("系统初始化成功(Init)...");
 
             //设置开机启动注册表
-            //RunWhenStart(true, "MDWorkStation", Application.ExecutablePath);
+            RunWhenStart(true, "MDWorkStation", Application.ExecutablePath);
         }
 
         private void readConfig()
@@ -133,6 +133,13 @@ namespace MDWorkStation
 
         private void button1_Click_1(object sender, EventArgs e)
         {
+
+            FormPassWord form2 = new FormPassWord();
+            DialogResult result = form2.ShowDialog();
+            if (result == System.Windows.Forms.DialogResult.Cancel)
+                return;
+
+
             writeMsg("您选择了退出系统(exit)...");
             threadRunFlag = false;
             this.Close();
