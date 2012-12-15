@@ -86,6 +86,7 @@ namespace MDWorkStation
 
             //设置开机启动注册表
             RunWhenStart(true, "MDWorkStation", Application.ExecutablePath);
+            System.Environment.CurrentDirectory = Path.GetDirectoryName(Application.ExecutablePath);
         }
 
         private void readConfig()
@@ -159,6 +160,11 @@ namespace MDWorkStation
                 string sDir = System.Environment.CurrentDirectory + "\\Data\\" + DateTime.Now.Year.ToString() + "\\" +
                             DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString() + "\\"
                             + DateTime.Today.Date.ToString("yyyyMMdd");
+
+                //writeMsg(sDir);
+
+
+
                 if (!Directory.Exists(sDir))//如果文件夹不存在
                     Directory.CreateDirectory(sDir);//创建文件夹，\Data\2012\201211\20121101
 
@@ -189,6 +195,8 @@ namespace MDWorkStation
 
                             int uploadSuccessFileNum = 1;
 
+                            
+
                             //从当前U盘获取一个文件
                             foreach (string usbFileName in usbItem.getFileList())
                             {
@@ -204,7 +212,9 @@ namespace MDWorkStation
                                 if (fileInfo.Length > getDiskFreeSpace(System.Environment.CurrentDirectory.Substring(0, 2)))
                                 {
                                     writeMsg("错误，磁盘空间不足，停止拷贝！");
+                                    Thread.Sleep(1000 * 60 * 10);//停止10分钟
                                     //timer_usbDiskCopy.Enabled = true;
+
                                     break;
                                 }
 
@@ -212,7 +222,7 @@ namespace MDWorkStation
 
                                 //够用，拷贝
                                 string localFileName = sDir + usbFileName.Substring(usbFileName.LastIndexOf("\\"));
-                                LogManager.WriteLog("正在拷贝数据： (" + uploadSuccessFileNum.ToString() + ")" + usbFileName);
+                                writeMsg("正在拷贝数据： (" + uploadSuccessFileNum.ToString() + ")" + usbFileName);
                                 File.Copy(usbFileName, localFileName, true);
 
                                 if (m_UploadFlag)
@@ -246,7 +256,7 @@ namespace MDWorkStation
                                     ftpClient.ChangeDir(removeDir);
 
                                     //上传文件
-                                    LogManager.WriteLog("正在上传文件: " + localFileName);
+                                    writeMsg("正在上传文件: " + localFileName);
                                     ftpClient.Upload(localFileName);//使用工作站中的文件上传，防止U盘被拔掉
                                    
 
@@ -275,7 +285,7 @@ namespace MDWorkStation
                                 }
 
                                 //删除源文件
-                                LogManager.WriteLog("正在删除数据： " + usbFileName);
+                                writeMsg("正在删除数据： " + usbFileName);
                                 File.Delete(usbFileName);
 
                                 //根据Name获得对应的控件对象,修改屏幕显示进度内容

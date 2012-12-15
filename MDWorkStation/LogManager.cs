@@ -18,7 +18,7 @@ namespace MDWorkStation
             {
                 if (logPath == string.Empty)
                 {
-                    logPath = System.Environment.CurrentDirectory + @"\Log\";
+                    logPath = Path.GetDirectoryName(Application.ExecutablePath) + @"\Log\";
                 }
                 return logPath;
             }

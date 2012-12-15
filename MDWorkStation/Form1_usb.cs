@@ -453,7 +453,7 @@ namespace MDWorkStation
                 
                 //lableID.Text = usbDiskObject.getDeviceID();// 设备ID： 99999
                 //lableID.Text = "编号： " + usbDiskObject.getPoliceID();// 警员编号ID： 99999
-                lableID.Text = "编号： " + usbDiskObject.getDeviceID();// 设备编号ID： A000022
+                lableID.Text = "编号 " + usbDiskObject.getDeviceID();// 设备编号ID： A000022
                 string id1 = usbDiskObject.getPoliceID();
                 string id2 = usbDiskObject.getDataTime();
                 lableID.Visible = true;
