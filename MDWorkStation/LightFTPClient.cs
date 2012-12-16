@@ -824,7 +824,7 @@ namespace MDWorkStation
                 /// <remarks>Reply codes: 257 500 501 502 421 530 550</remarks>
                 this.sendCommand("MKD " + dirName);
 
-                if (this.resultCode != 250 && this.resultCode != 257) FireException(this.result.Substring(4));
+                if (this.resultCode != 250 && this.resultCode != 257 && this.resultCode != 550/*add by paul*/) FireException(this.result.Substring(4));
 
                 showMessage("Created directory " + dirName, false);
             }
@@ -862,6 +862,9 @@ namespace MDWorkStation
                 }
 
                 if (!this.loggedin) this.Login();
+
+                if (dirName == this.remotePath)//add by paul
+                    return this.remotePath;
 
                 /// <summary>
                 /// Changes the current directory

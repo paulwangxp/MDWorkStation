@@ -107,6 +107,15 @@ namespace MDWorkStation
             m_ftpPwd = iniObject.IniReadValue("config", "FtpPwd", "test1");
             m_WorkStationID = iniObject.IniReadValue("config", "MachineID", "778899");
 
+            //FtpClient ftpClient = new FtpClient(m_ftpSever, m_ftpUser, m_ftpPwd, 120, int.Parse(m_ftpPort));
+            //ftpClient.Login();
+            //ftpClient.ChangeDir("/test");
+            //ftpClient.ChangeDir("/test1");
+            //ftpClient.ChangeDir("/test");
+            //ftpClient.ChangeDir("/test");
+            //ftpClient.MakeDir("test1");
+            //ftpClient.MakeDir("test");
+
             if (m_topMost)
                 this.TopMost = true;
             
@@ -233,8 +242,9 @@ namespace MDWorkStation
                                     string interface_Upload = m_interfaceStr + "?method=uploadFile";
                                     string responseText = "";
                                     string removeDir = "";//服务器返回的FTP文件存放路径
+                                    string removeDir1 = "";
                                     string removeFileName = "";//上传到FTP上的文件绝对路径 1/101/103/11.mp4
-                                    if (HttpWebResponseUtility.getFtpDirRequestStatusCode(interface_Ftp, usbItem.getPoliceID(), out removeDir)
+                                    if (HttpWebResponseUtility.getFtpDirRequestStatusCode(interface_Ftp, m_WorkStationID, out removeDir1)
                                         != System.Net.HttpStatusCode.OK)
                                     {
 
@@ -242,7 +252,7 @@ namespace MDWorkStation
                                         writeMsg("错误，路径接口调用失败，请检查网络及服务器！");
                                         continue;
                                     }
-                                    string[] list1 = removeDir.Split(',');
+                                    string[] list1 = removeDir1.Substring(removeDir1.LastIndexOf('\n') + 1).Split(';');
                                     if (!list1[0].Equals("0"))
                                     {
                                         LogManager.showErrorMsg("错误，"+ list1[1]);
@@ -252,7 +262,9 @@ namespace MDWorkStation
                                     removeDir = list1[1];
 
 
-                                    //切换到服务器接口返回的工作目录
+
+                                    //切换到服务器接口返回的工作目录                            
+                                    ftpClient.MakeDir(removeDir);                                    
                                     ftpClient.ChangeDir(removeDir);
 
                                     //上传文件
@@ -263,9 +275,11 @@ namespace MDWorkStation
                                     //获得文件的播放时间
                                     string fileDuration = FFMpegUtility.getMediaPlayTime(localFileName);
 
+                                    removeFileName = removeDir + Path.GetFileName(localFileName);
+
                                     //调用平台上传接口
-                                    if (HttpWebResponseUtility.getUrlRequestStatusCode(interface_Upload, usbItem.getPoliceID(), m_WorkStationID,
-                                        localFileName, removeFileName, usbItem.getDataTime(), fileInfo.Length.ToString(), fileDuration,
+                                    if (HttpWebResponseUtility.getUrlRequestStatusCode(interface_Upload, m_WorkStationID, usbItem.getPoliceID(),
+                                        Path.GetFileName(localFileName), removeFileName, usbItem.getDataTime(), fileInfo.Length.ToString(), fileDuration,
                                         out responseText)
                                         != System.Net.HttpStatusCode.OK)
                                     {
@@ -275,10 +289,10 @@ namespace MDWorkStation
                                         continue;
 
                                     }
-                                    string[] list2 = responseText.Split(',');
-                                    if (!responseText[0].Equals("0"))
+                                    string[] list2 = responseText.Substring(responseText.LastIndexOf('\n') + 1).Split(';');
+                                    if (!list2[0].Equals("0"))
                                     {
-                                        LogManager.showErrorMsg("错误，" + responseText[1]);
+                                        LogManager.showErrorMsg("错误，" + list2[1]);
                                         continue;
                                     }
 
@@ -286,6 +300,7 @@ namespace MDWorkStation
 
                                 //删除源文件
                                 writeMsg("正在删除数据： " + usbFileName);
+                                File.Delete(localFileName);
                                 File.Delete(usbFileName);
 
                                 //根据Name获得对应的控件对象,修改屏幕显示进度内容
