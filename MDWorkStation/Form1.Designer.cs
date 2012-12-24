@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.timer_usbDiskCopy = new System.Windows.Forms.Timer(this.components);
+            this.timer_IntoUSBMode = new System.Windows.Forms.Timer(this.components);
             this.pBox_logo = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
@@ -116,8 +116,8 @@
             // 
             // timer_usbDiskCopy
             // 
-            this.timer_usbDiskCopy.Interval = 1000;
-            this.timer_usbDiskCopy.Tick += new System.EventHandler(this.timer_usbDiskCopy_Tick);
+            this.timer_IntoUSBMode.Interval = 1000;
+            this.timer_IntoUSBMode.Tick += new System.EventHandler(this.timer_DriverVersion_Tick);
             // 
             // pBox_logo
             // 
@@ -943,7 +943,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Timer timer_usbDiskCopy;
+        private System.Windows.Forms.Timer timer_IntoUSBMode;
         private System.Windows.Forms.PictureBox pBox_logo;
         public System.Windows.Forms.PictureBox pictureBox1;
         public System.Windows.Forms.PictureBox pictureBox2;

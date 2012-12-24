@@ -46,14 +46,39 @@ namespace MDWorkStation
 
 
 
-        private int initDevice()
+        public int initDevice()
         {
             int rtn;
             rtn = CXK_ConnectDV();
             if (rtn > 0)
-                MessageBox.Show(" 连接成功 ", " 高清DV ");
-            else
-                MessageBox.Show(" 连接成功 ", " 无驱动版本高清DV ");
+            {
+                writeMsg(" 连接成功 ,有驱动版本高清DV ");
+
+                StringBuilder password = new StringBuilder(m_DVPwd);
+
+                if (CXK_Login(password) != 1)//登录
+                {
+                    writeMsg("登录失败");
+                    return 0;
+                }
+
+                DV_TM t1 = new DV_TM();
+
+                t1.tm_year = DateTime.Now.Year;
+                t1.tm_mon = DateTime.Now.Month;
+                t1.tm_mday = DateTime.Now.Day;
+                t1.tm_hour = DateTime.Now.Hour;
+                t1.tm_min = DateTime.Now.Minute;
+                t1.tm_sec = DateTime.Now.Second;
+
+                t1.tm_yday = 0;
+                t1.tm_isdst = 0;
+                CXK_SetTime(ref t1);//设定时间
+                writeMsg("设定时间");
+
+                CXK_IntoUDiskMode();//进入U盘模式
+                writeMsg("进入U盘模式");
+            }
 
             return rtn;
         }

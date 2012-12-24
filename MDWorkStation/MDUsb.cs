@@ -213,6 +213,7 @@ namespace MDWorkStation
         
         }
 
+
         public string getDataTime()
         {
             if (m_FileList.Count > 0)
@@ -221,7 +222,8 @@ namespace MDWorkStation
             return "00000000000000";
         }
 
-        private string getDeviceIDFromFile(string sFileName)
+
+        public static string getDeviceIDFromFile(string sFileName)
         {
             string sName = sFileName.Substring(sFileName.LastIndexOf("\\") + 1);
             //return sName.Substring(0, sName.Length - 18);//去掉后面14位日期的就是编号
@@ -231,7 +233,7 @@ namespace MDWorkStation
             return sName.Substring(0, sName.IndexOf("_"));//A000000_99999920120101231212.mp4
         }
 
-        private string getPoliceIDFromFile(string sFileName)
+        public static string getPoliceIDFromFile(string sFileName)
         {
             string sName = sFileName.Substring(sFileName.LastIndexOf("\\")+1);
             //return sName.Substring(0, sName.Length - 18);//去掉后面14位日期的就是编号
@@ -242,7 +244,7 @@ namespace MDWorkStation
             return sName.Substring(sName.IndexOf("_")+1, 6);//A000000_99999920120101231212.mp4
         }
 
-        private string getDataTimeFromFile(string sFileName)
+        public static string getDataTimeFromFile(string sFileName)
         {
             string sName = sFileName.Substring(sFileName.LastIndexOf("\\") + 1);
             if (sName.Length < 26)//老文件格式

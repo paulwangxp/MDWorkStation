@@ -17,14 +17,15 @@ namespace MDWorkStation
     public partial class Form1 : Form
     {
 
-        Dictionary<string, MDUsb> usbDiskDic = new Dictionary<string, MDUsb> ();//USB对象队列，结束一个pop up一个
+        Dictionary<string, MDUsb> usbDiskDic = new Dictionary<string, MDUsb>();//USB对象队列，结束一个pop up一个
+        List<string> FtpList = new List<string>();//FTP待上传的队列
 
-        Thread workThread;
-        bool bFirstRun = true;
+        Thread workThread, uploadThread;
         bool threadRunFlag = true;
 
         bool m_topMost = false;//界面是否在最上层
-        bool m_hasDriver = false;//是否是有驱动版本        
+        bool m_hasDriver = false;//是否是有驱动版本
+        string m_DVPwd = "";//记录仪有驱动版本的密码
         string m_DataPathStr = "";//随时录数据保存路径
 
         bool m_UploadFlag = false;//是否要上传至平台
@@ -35,7 +36,7 @@ namespace MDWorkStation
         string m_ftpPwd = "";
         string m_WorkStationID = "";
 
-        
+
 
         public Form1()
         {
@@ -43,7 +44,7 @@ namespace MDWorkStation
             this.TopMost = false;//界面是否永远在最上层
 
             InitializeComponent();
-
+           
             InitControlPos();//设置各控件的位置，用于不同分辨率的情况
 
             readConfig();//读取配置文件
@@ -54,15 +55,24 @@ namespace MDWorkStation
 
             CheckForIllegalCrossThreadCalls = false;
 
+            ShutDownForm f1 = new ShutDownForm();
+            f1.Show();
 
-            
 
-            workThread = new Thread(new ThreadStart(allOfWork));     
+
+
+            workThread = new Thread(new ThreadStart(allOfWork));
             workThread.Start();
+
+            if (m_UploadFlag)//需要上传到服务器
+            {
+                uploadThread = new Thread(new ThreadStart(UploadWork));
+                uploadThread.Start();
+            }
 
         }
 
-       
+
 
 
         private void InitControlPos()
@@ -71,7 +81,7 @@ namespace MDWorkStation
             //label1.BringToFront();
 
             //listBox1.Visible = false;
-            foreach (Control tbox in this.Controls )
+            foreach (Control tbox in this.Controls)
             {
                 if (tbox is Label && tbox.Name.Contains("label"))
                 {
@@ -90,14 +100,15 @@ namespace MDWorkStation
         }
 
         private void readConfig()
-        { 
+        {
             //1.读取当前程序配置
             writeMsg("读取配置...");
             INIFile iniObject = new INIFile();
 
             m_topMost = iniObject.IniReadValue("config", "TopMost", "0") == "0" ? false : true;
-            m_hasDriver = iniObject.IniReadValue("config", "Driver", "0") == "0" ? false:true;
-            m_DataPathStr = iniObject.IniReadValue("config", "Path","\\Data");//目录不允许设置保存路径
+            m_hasDriver = iniObject.IniReadValue("config", "Driver", "0") == "0" ? false : true;
+            m_DVPwd = iniObject.IniReadValue("config", "LoginPwd", "\\Data");//DV的登录密码
+            m_DataPathStr = iniObject.IniReadValue("config", "Path", "\\Data");//目录不允许设置保存路径
 
             m_UploadFlag = iniObject.IniReadValue("config", "UploadFlag", "0") == "0" ? false : true;
             m_interfaceStr = iniObject.IniReadValue("config", "UploadInterface", "http://127.0.0.1//interfaceAction.do");
@@ -118,7 +129,11 @@ namespace MDWorkStation
 
             if (m_topMost)
                 this.TopMost = true;
-            
+
+            if (m_hasDriver)
+                timer_IntoUSBMode.Enabled = true;
+
+
 
         }
 
@@ -136,9 +151,9 @@ namespace MDWorkStation
 
             listBox1.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss: ") + msg);
             listBox1.SelectedIndex = listBox1.Items.Count - 1;
-            
-            
- 
+
+
+
         }
 
         private void button1_Click_1(object sender, EventArgs e)
@@ -158,9 +173,9 @@ namespace MDWorkStation
         private void allOfWork()
         {
 
-            FtpClient ftpClient = new FtpClient(m_ftpSever, m_ftpUser, m_ftpPwd, 120, int.Parse(m_ftpPort));
-            
-            
+
+
+
 
             while (threadRunFlag)
             {
@@ -183,16 +198,8 @@ namespace MDWorkStation
                 {
                     if (usbDiskDic.Count >= 0)
                     {
-                        
-                        if (m_UploadFlag)
-                        {
-                            ftpClient.Login();
-                            
-                            //ftpClient.Download("0218620121203103434.mp4", "123.mp4", true);//断点下载
-                            //LogManager.WriteLog("正在上传文件: " + );
-                            //ftpClient.Upload(@"E:\company\MD\自动上传软件\执法记录仪资料\mp4\0218620121203103434.mp4",true);//断点续传
-                            
-                        }
+
+
 
 
                         foreach (MDUsb usbItem in usbDiskDic.Values)//遍历整个usb队列
@@ -204,7 +211,7 @@ namespace MDWorkStation
 
                             int uploadSuccessFileNum = 1;
 
-                            
+
 
                             //从当前U盘获取一个文件
                             foreach (string usbFileName in usbItem.getFileList())
@@ -234,74 +241,21 @@ namespace MDWorkStation
                                 writeMsg("正在拷贝数据： (" + uploadSuccessFileNum.ToString() + ")" + usbFileName);
                                 File.Copy(usbFileName, localFileName, true);
 
-                                if (m_UploadFlag)
-                                {
-
-                                    //从接口获取文件FTP的上传路径
-                                    string interface_Ftp = m_interfaceStr + "?method=getFtpPath";
-                                    string interface_Upload = m_interfaceStr + "?method=uploadFile";
-                                    string responseText = "";
-                                    string removeDir = "";//服务器返回的FTP文件存放路径
-                                    string removeDir1 = "";
-                                    string removeFileName = "";//上传到FTP上的文件绝对路径 1/101/103/11.mp4
-                                    if (HttpWebResponseUtility.getFtpDirRequestStatusCode(interface_Ftp, m_WorkStationID, out removeDir1)
-                                        != System.Net.HttpStatusCode.OK)
-                                    {
-
-                                        //接口调用失败，停止下面的工作，直接退出
-                                        writeMsg("错误，路径接口调用失败，请检查网络及服务器！");
-                                        continue;
-                                    }
-                                    string[] list1 = removeDir1.Substring(removeDir1.LastIndexOf('\n') + 1).Split(';');
-                                    if (!list1[0].Equals("0"))
-                                    {
-                                        LogManager.showErrorMsg("错误，"+ list1[1]);
-                                        continue;
-                                    }
-
-                                    removeDir = list1[1];
 
 
-
-                                    //切换到服务器接口返回的工作目录                            
-                                    ftpClient.MakeDir(removeDir);                                    
-                                    ftpClient.ChangeDir(removeDir);
-
-                                    //上传文件
-                                    writeMsg("正在上传文件: " + localFileName);
-                                    ftpClient.Upload(localFileName);//使用工作站中的文件上传，防止U盘被拔掉
-                                   
-
-                                    //获得文件的播放时间
-                                    string fileDuration = FFMpegUtility.getMediaPlayTime(localFileName);
-
-                                    removeFileName = removeDir + Path.GetFileName(localFileName);
-
-                                    //调用平台上传接口
-                                    if (HttpWebResponseUtility.getUrlRequestStatusCode(interface_Upload, m_WorkStationID, usbItem.getPoliceID(),
-                                        Path.GetFileName(localFileName), removeFileName, usbItem.getDataTime(), fileInfo.Length.ToString(), fileDuration,
-                                        out responseText)
-                                        != System.Net.HttpStatusCode.OK)
-                                    {
-
-                                        //接口调用失败，停止下面的工作，直接退出
-                                        writeMsg("错误，上传接口调用失败，请检查网络及服务器！");
-                                        continue;
-
-                                    }
-                                    string[] list2 = responseText.Substring(responseText.LastIndexOf('\n') + 1).Split(';');
-                                    if (!list2[0].Equals("0"))
-                                    {
-                                        LogManager.showErrorMsg("错误，" + list2[1]);
-                                        continue;
-                                    }
-
-                                }
-
-                                //删除源文件
+                                //删除USB源文件
                                 writeMsg("正在删除数据： " + usbFileName);
-                                File.Delete(localFileName);
                                 File.Delete(usbFileName);
+
+                                if (m_UploadFlag)//如果要上传到服务器，就不能删除本地文件
+                                {
+                                    FtpList.Add(localFileName);
+                                }
+                                else
+                                {
+                                    writeMsg("正在删除数据： " + localFileName);
+                                    File.Delete(localFileName);
+                                }
 
                                 //根据Name获得对应的控件对象,修改屏幕显示进度内容
                                 int pos = MDUsbPos.getUsbPos(usbItem.driverName);
@@ -341,14 +295,121 @@ namespace MDWorkStation
             }
         }
 
-        //U盘定时拷贝Timer
-        private void timer_usbDiskCopy_Tick(object sender, EventArgs e)
+        private void UploadWork()
         {
-            timer_usbDiskCopy.Enabled = false;
-            return;
 
-            
-            timer_usbDiskCopy.Enabled = true;
+            FtpClient ftpClient = new FtpClient(m_ftpSever, m_ftpUser, m_ftpPwd, 120, int.Parse(m_ftpPort));
+
+            while (true)
+            {
+                Thread.Sleep(1000);
+
+                foreach (string localFileName in FtpList)
+                {
+
+                    try
+                    {
+                        ftpClient.Login();
+
+                        //ftpClient.Download("0218620121203103434.mp4", "123.mp4", true);//断点下载
+                        //LogManager.WriteLog("正在上传文件: " + );
+                        //ftpClient.Upload(@"E:\company\MD\自动上传软件\执法记录仪资料\mp4\0218620121203103434.mp4",true);//断点续传
+
+
+                        //从接口获取文件FTP的上传路径
+                        string interface_Ftp = m_interfaceStr + "?method=getFtpPath";
+                        string interface_Upload = m_interfaceStr + "?method=uploadFile";
+                        string responseText = "";
+                        string removeDir = "";//服务器返回的FTP文件存放路径
+                        string removeDir1 = "";
+                        string removeFileName = "";//上传到FTP上的文件绝对路径 1/101/103/11.mp4
+                        if (HttpWebResponseUtility.getFtpDirRequestStatusCode(interface_Ftp, m_WorkStationID, out removeDir1)
+                            != System.Net.HttpStatusCode.OK)
+                        {
+
+                            //接口调用失败，停止下面的工作，直接退出
+                            writeMsg("错误，路径接口调用失败，请检查网络及服务器！");
+                            continue;
+                        }
+                        string[] list1 = removeDir1.Substring(removeDir1.LastIndexOf('\n') + 1).Split(';');
+                        if (!list1[0].Equals("0"))
+                        {
+                            LogManager.showErrorMsg("错误，" + list1[1]);
+                            continue;
+                        }
+
+                        removeDir = list1[1];
+
+
+
+                        //切换到服务器接口返回的工作目录                            
+                        ftpClient.MakeDir(removeDir);
+                        ftpClient.ChangeDir(removeDir);
+
+                        //上传文件
+                        writeMsg("正在上传文件: " + localFileName);
+                        ftpClient.Upload(localFileName);//使用工作站中的文件上传，防止U盘被拔掉
+
+
+                        //获得文件的播放时间
+                        string fileDuration = FFMpegUtility.getMediaPlayTime(localFileName);
+
+                        removeFileName = removeDir + Path.GetFileName(localFileName);
+
+
+                        FileInfo fileInfo = new FileInfo(localFileName);
+
+                        //调用平台上传接口
+                        if (HttpWebResponseUtility.getUrlRequestStatusCode(interface_Upload, m_WorkStationID, MDUsb.getPoliceIDFromFile(localFileName),
+                            Path.GetFileName(localFileName), removeFileName, MDUsb.getDataTimeFromFile(localFileName), fileInfo.Length.ToString(), fileDuration,
+                            out responseText)
+                            != System.Net.HttpStatusCode.OK)
+                        {
+
+                            //接口调用失败，停止下面的工作，直接退出
+                            writeMsg("错误，上传接口调用失败，请检查网络及服务器！");
+                            continue;
+
+                        }
+                        string[] list2 = responseText.Substring(responseText.LastIndexOf('\n') + 1).Split(';');
+                        if (!list2[0].Equals("0"))
+                        {
+                            LogManager.showErrorMsg("错误，" + list2[1]);
+                            continue;
+                        }
+
+
+                        //上传成功删除队列及本地文件
+                        FtpList.Remove(localFileName);
+                        File.Delete(localFileName);
+                        writeMsg("文件上传服务器成功" + localFileName);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        LogManager.WriteLog(ex.Message);
+                        continue;
+                    }                  
+
+
+
+                }
+
+            }
+
+
+
+        }
+
+        //有驱动模式的定时Timer
+        private void timer_DriverVersion_Tick(object sender, EventArgs e)
+        {
+            timer_IntoUSBMode.Enabled = false;
+
+            initDevice();            
+
+
+            timer_IntoUSBMode.Enabled = true;
 
         }
 
@@ -395,7 +456,7 @@ namespace MDWorkStation
             form1.ShowDialog();
         }
 
-        
+
     }
 
 

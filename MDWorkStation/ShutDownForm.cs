@@ -14,6 +14,8 @@ namespace MDWorkStation
         public ShutDownForm()
         {
             InitializeComponent();
+            checkBox_AllDay.Checked = true;
+            dateTimePicker1.Enabled = dateTimePicker2.Enabled = false;
         }
 
         //关闭电脑
@@ -34,6 +36,13 @@ namespace MDWorkStation
         private void button3_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+
+        //全天上传的checkbox事件
+        private void checkBox_AllDay_CheckedChanged(object sender, EventArgs e)
+        {
+            dateTimePicker1.Enabled = dateTimePicker2.Enabled = !checkBox_AllDay.Checked;
         }
     }
 }
