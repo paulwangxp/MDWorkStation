@@ -55,8 +55,8 @@ namespace MDWorkStation
 
             CheckForIllegalCrossThreadCalls = false;
 
-            ShutDownForm f1 = new ShutDownForm();
-            f1.Show();
+            //ShutDownForm f1 = new ShutDownForm();
+            //f1.Show();
 
 
 
@@ -251,11 +251,11 @@ namespace MDWorkStation
                                 {
                                     FtpList.Add(localFileName);
                                 }
-                                else
-                                {
-                                    writeMsg("正在删除数据： " + localFileName);
-                                    File.Delete(localFileName);
-                                }
+                                //else//不应在此删除数据，应该在上传到服务器完成后删除
+                                //{
+                                //    writeMsg("正在删除数据： " + localFileName);
+                                //    File.Delete(localFileName);
+                                //}
 
                                 //根据Name获得对应的控件对象,修改屏幕显示进度内容
                                 int pos = MDUsbPos.getUsbPos(usbItem.driverName);
@@ -381,8 +381,10 @@ namespace MDWorkStation
 
                         //上传成功删除队列及本地文件
                         FtpList.Remove(localFileName);
-                        File.Delete(localFileName);
                         writeMsg("文件上传服务器成功" + localFileName);
+                        File.Delete(localFileName);
+                        writeMsg("删除已上传文件" + localFileName);
+                        
 
                     }
                     catch (Exception ex)

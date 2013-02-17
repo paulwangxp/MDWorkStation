@@ -114,7 +114,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pBox_desc)).BeginInit();
             this.SuspendLayout();
             // 
-            // timer_usbDiskCopy
+            // timer_IntoUSBMode
             // 
             this.timer_IntoUSBMode.Interval = 1000;
             this.timer_IntoUSBMode.Tick += new System.EventHandler(this.timer_DriverVersion_Tick);
@@ -850,7 +850,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::MDWorkStation.Properties.Resources._1_376;
-            this.ClientSize = new System.Drawing.Size(1280, 820);
+            this.ClientSize = new System.Drawing.Size(1280, 1024);
             this.Controls.Add(this.pBox_desc);
             this.Controls.Add(this.labInfo);
             this.Controls.Add(this.imageButton_Setup);
