@@ -78,6 +78,7 @@ namespace MDWorkStation
                     driverName[i] = "";
                     pos[i] = 0;
                     isConnected[i] = false;
+                    isCompated[i] = false;
 
                     return true;
                 }

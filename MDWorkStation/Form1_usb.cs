@@ -404,7 +404,7 @@ namespace MDWorkStation
                     usbDiskObject = usbDiskDic[currentDriverName];//取出对应的元素
                     //  获得当前U盘对应的屏幕位置
                     pos = MDUsbPos.getUsbPos(currentDriverName);
-                    MDUsbPos.setDisconnect(currentDriverName);//拔出时清空数据
+                    MDUsbPos.setDisconnect(currentDriverName);//拔出时清空数据                    
                     usbDiskDic.Remove(currentDriverName);
                     
                 }

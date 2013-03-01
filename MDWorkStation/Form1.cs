@@ -300,12 +300,20 @@ namespace MDWorkStation
 
             FtpClient ftpClient = new FtpClient(m_ftpSever, m_ftpUser, m_ftpPwd, 120, int.Parse(m_ftpPort));
 
-            while (true)
+            while (threadRunFlag)
             {
-                Thread.Sleep(1000);
+                
 
-                foreach (string localFileName in FtpList)
+                for( int i = 0; i<FtpList.Count; i++)
                 {
+
+                    if (FtpList.Count <= 0)
+                    {
+                        Thread.Sleep(1000);
+                        continue;
+                    }
+
+                    string localFileName = FtpList[i];
 
                     try
                     {
@@ -390,6 +398,7 @@ namespace MDWorkStation
                     catch (Exception ex)
                     {
                         LogManager.WriteLog(ex.Message);
+                        Thread.Sleep(1000);
                         continue;
                     }                  
 
