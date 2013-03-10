@@ -356,7 +356,7 @@ namespace MDWorkStation
 
                         //上传文件
                         writeMsg("正在上传文件: " + localFileName);
-                        ftpClient.Upload(localFileName);//使用工作站中的文件上传，防止U盘被拔掉
+                        ftpClient.Upload(localFileName,true);//true,断点续传 使用工作站中的文件上传，防止U盘被拔掉
 
 
                         //获得文件的播放时间
