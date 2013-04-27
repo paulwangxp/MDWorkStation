@@ -36,7 +36,7 @@ namespace MDWorkStation
                         this.Close();
                     }
                     break;
-                case "取消":
+                case "清空":
                     textBox1.Text = "";
                     break;
                 case "关闭":
