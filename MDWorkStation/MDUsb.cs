@@ -259,7 +259,7 @@ namespace MDWorkStation
             return m_FileList.ToArray(); 
         }
 
-        public int getFileCount()
+        public int calcFileCount()
         {
             m_FileList.AddRange(Directory.GetFiles(driverName, "*.wav", SearchOption.AllDirectories));
 
@@ -270,7 +270,12 @@ namespace MDWorkStation
             m_FileList.AddRange(Directory.GetFiles(driverName, "*.avi", SearchOption.AllDirectories));
 
             return m_FileList.Count;
-            
+        }
+
+        public int getFileCount()
+        {
+
+            return m_FileList.Count;
         }
 
     }

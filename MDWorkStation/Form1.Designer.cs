@@ -90,6 +90,7 @@
             this.imageButton_Setup = new System.Windows.Forms.ImageButton();
             this.labInfo = new System.Windows.Forms.Label();
             this.pBox_desc = new System.Windows.Forms.PictureBox();
+            this.labInfo2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pBox_logo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -132,7 +133,7 @@
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.BackgroundImage = global::MDWorkStation.Properties.Resources.b2;
+            this.pictureBox1.BackgroundImage = global::MDWorkStation.Properties.Resources.b1;
             this.pictureBox1.Location = new System.Drawing.Point(52, 93);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(166, 166);
@@ -156,7 +157,7 @@
             // pictureBox3
             // 
             this.pictureBox3.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox3.BackgroundImage = global::MDWorkStation.Properties.Resources.b3;
+            this.pictureBox3.BackgroundImage = global::MDWorkStation.Properties.Resources.b1;
             this.pictureBox3.Location = new System.Drawing.Point(452, 93);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(166, 166);
@@ -168,7 +169,7 @@
             // pictureBox4
             // 
             this.pictureBox4.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox4.BackgroundImage = global::MDWorkStation.Properties.Resources.b2;
+            this.pictureBox4.BackgroundImage = global::MDWorkStation.Properties.Resources.b1;
             this.pictureBox4.Location = new System.Drawing.Point(652, 93);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(166, 166);
@@ -180,7 +181,7 @@
             // pictureBox5
             // 
             this.pictureBox5.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox5.BackgroundImage = global::MDWorkStation.Properties.Resources.b2;
+            this.pictureBox5.BackgroundImage = global::MDWorkStation.Properties.Resources.b1;
             this.pictureBox5.Location = new System.Drawing.Point(852, 93);
             this.pictureBox5.Name = "pictureBox5";
             this.pictureBox5.Size = new System.Drawing.Size(166, 166);
@@ -192,7 +193,7 @@
             // pictureBox6
             // 
             this.pictureBox6.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox6.BackgroundImage = global::MDWorkStation.Properties.Resources.b2;
+            this.pictureBox6.BackgroundImage = global::MDWorkStation.Properties.Resources.b1;
             this.pictureBox6.Location = new System.Drawing.Point(1052, 93);
             this.pictureBox6.Name = "pictureBox6";
             this.pictureBox6.Size = new System.Drawing.Size(166, 166);
@@ -204,7 +205,7 @@
             // pictureBox7
             // 
             this.pictureBox7.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox7.BackgroundImage = global::MDWorkStation.Properties.Resources.b2;
+            this.pictureBox7.BackgroundImage = global::MDWorkStation.Properties.Resources.b1;
             this.pictureBox7.Location = new System.Drawing.Point(52, 293);
             this.pictureBox7.Name = "pictureBox7";
             this.pictureBox7.Size = new System.Drawing.Size(166, 166);
@@ -216,7 +217,7 @@
             // pictureBox8
             // 
             this.pictureBox8.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox8.BackgroundImage = global::MDWorkStation.Properties.Resources.b2;
+            this.pictureBox8.BackgroundImage = global::MDWorkStation.Properties.Resources.b1;
             this.pictureBox8.Location = new System.Drawing.Point(252, 293);
             this.pictureBox8.Name = "pictureBox8";
             this.pictureBox8.Size = new System.Drawing.Size(166, 166);
@@ -228,7 +229,7 @@
             // pictureBox9
             // 
             this.pictureBox9.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox9.BackgroundImage = global::MDWorkStation.Properties.Resources.b2;
+            this.pictureBox9.BackgroundImage = global::MDWorkStation.Properties.Resources.b1;
             this.pictureBox9.Location = new System.Drawing.Point(452, 293);
             this.pictureBox9.Name = "pictureBox9";
             this.pictureBox9.Size = new System.Drawing.Size(166, 166);
@@ -240,7 +241,7 @@
             // pictureBox10
             // 
             this.pictureBox10.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox10.BackgroundImage = global::MDWorkStation.Properties.Resources.b2;
+            this.pictureBox10.BackgroundImage = global::MDWorkStation.Properties.Resources.b1;
             this.pictureBox10.Location = new System.Drawing.Point(652, 293);
             this.pictureBox10.Name = "pictureBox10";
             this.pictureBox10.Size = new System.Drawing.Size(166, 166);
@@ -252,7 +253,7 @@
             // pictureBox11
             // 
             this.pictureBox11.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox11.BackgroundImage = global::MDWorkStation.Properties.Resources.b2;
+            this.pictureBox11.BackgroundImage = global::MDWorkStation.Properties.Resources.b1;
             this.pictureBox11.Location = new System.Drawing.Point(852, 293);
             this.pictureBox11.Name = "pictureBox11";
             this.pictureBox11.Size = new System.Drawing.Size(166, 166);
@@ -264,7 +265,7 @@
             // pictureBox12
             // 
             this.pictureBox12.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox12.BackgroundImage = global::MDWorkStation.Properties.Resources.b2;
+            this.pictureBox12.BackgroundImage = global::MDWorkStation.Properties.Resources.b1;
             this.pictureBox12.Location = new System.Drawing.Point(1052, 293);
             this.pictureBox12.Name = "pictureBox12";
             this.pictureBox12.Size = new System.Drawing.Size(166, 166);
@@ -293,7 +294,7 @@
             // pictureBox13
             // 
             this.pictureBox13.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox13.BackgroundImage = global::MDWorkStation.Properties.Resources.b2;
+            this.pictureBox13.BackgroundImage = global::MDWorkStation.Properties.Resources.b1;
             this.pictureBox13.Location = new System.Drawing.Point(52, 493);
             this.pictureBox13.Name = "pictureBox13";
             this.pictureBox13.Size = new System.Drawing.Size(166, 166);
@@ -305,7 +306,7 @@
             // pictureBox14
             // 
             this.pictureBox14.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox14.BackgroundImage = global::MDWorkStation.Properties.Resources.b2;
+            this.pictureBox14.BackgroundImage = global::MDWorkStation.Properties.Resources.b1;
             this.pictureBox14.Location = new System.Drawing.Point(252, 493);
             this.pictureBox14.Name = "pictureBox14";
             this.pictureBox14.Size = new System.Drawing.Size(166, 166);
@@ -317,7 +318,7 @@
             // pictureBox15
             // 
             this.pictureBox15.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox15.BackgroundImage = global::MDWorkStation.Properties.Resources.b2;
+            this.pictureBox15.BackgroundImage = global::MDWorkStation.Properties.Resources.b1;
             this.pictureBox15.Location = new System.Drawing.Point(452, 493);
             this.pictureBox15.Name = "pictureBox15";
             this.pictureBox15.Size = new System.Drawing.Size(166, 166);
@@ -329,7 +330,7 @@
             // pictureBox16
             // 
             this.pictureBox16.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox16.BackgroundImage = global::MDWorkStation.Properties.Resources.b2;
+            this.pictureBox16.BackgroundImage = global::MDWorkStation.Properties.Resources.b1;
             this.pictureBox16.Location = new System.Drawing.Point(652, 493);
             this.pictureBox16.Name = "pictureBox16";
             this.pictureBox16.Size = new System.Drawing.Size(166, 166);
@@ -341,7 +342,7 @@
             // pictureBox17
             // 
             this.pictureBox17.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox17.BackgroundImage = global::MDWorkStation.Properties.Resources.b2;
+            this.pictureBox17.BackgroundImage = global::MDWorkStation.Properties.Resources.b1;
             this.pictureBox17.Location = new System.Drawing.Point(852, 493);
             this.pictureBox17.Name = "pictureBox17";
             this.pictureBox17.Size = new System.Drawing.Size(166, 166);
@@ -353,7 +354,7 @@
             // pictureBox18
             // 
             this.pictureBox18.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox18.BackgroundImage = global::MDWorkStation.Properties.Resources.b2;
+            this.pictureBox18.BackgroundImage = global::MDWorkStation.Properties.Resources.b1;
             this.pictureBox18.Location = new System.Drawing.Point(1052, 493);
             this.pictureBox18.Name = "pictureBox18";
             this.pictureBox18.Size = new System.Drawing.Size(166, 166);
@@ -828,11 +829,11 @@
             this.labInfo.BackColor = System.Drawing.Color.Transparent;
             this.labInfo.Font = new System.Drawing.Font("黑体", 16F);
             this.labInfo.ForeColor = System.Drawing.Color.White;
-            this.labInfo.Location = new System.Drawing.Point(876, 42);
+            this.labInfo.Location = new System.Drawing.Point(888, 12);
             this.labInfo.Name = "labInfo";
-            this.labInfo.Size = new System.Drawing.Size(329, 22);
+            this.labInfo.Size = new System.Drawing.Size(351, 22);
             this.labInfo.TabIndex = 55;
-            this.labInfo.Text = "名都执法记录仪采集工作站 V1.0";
+            this.labInfo.Text = "名都执法记录仪采集系统软件 V1.0";
             // 
             // pBox_desc
             // 
@@ -845,12 +846,25 @@
             this.pBox_desc.TabIndex = 56;
             this.pBox_desc.TabStop = false;
             // 
+            // labInfo2
+            // 
+            this.labInfo2.AutoSize = true;
+            this.labInfo2.BackColor = System.Drawing.Color.Transparent;
+            this.labInfo2.Font = new System.Drawing.Font("黑体", 16F);
+            this.labInfo2.ForeColor = System.Drawing.Color.White;
+            this.labInfo2.Location = new System.Drawing.Point(967, 44);
+            this.labInfo2.Name = "labInfo2";
+            this.labInfo2.Size = new System.Drawing.Size(274, 22);
+            this.labInfo2.TabIndex = 57;
+            this.labInfo2.Text = "南京名都安防器械有限公司";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::MDWorkStation.Properties.Resources._1_376;
-            this.ClientSize = new System.Drawing.Size(1280, 1024);
+            this.ClientSize = new System.Drawing.Size(1280, 820);
+            this.Controls.Add(this.labInfo2);
             this.Controls.Add(this.pBox_desc);
             this.Controls.Add(this.labInfo);
             this.Controls.Add(this.imageButton_Setup);
@@ -914,6 +928,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Form1";
             this.Text = "Form1";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.pBox_logo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
@@ -1004,6 +1019,7 @@
         private System.Windows.Forms.ImageButton imageButton_Setup;
         public System.Windows.Forms.Label labInfo;
         private System.Windows.Forms.PictureBox pBox_desc;
+        public System.Windows.Forms.Label labInfo2;
     }
 }
 

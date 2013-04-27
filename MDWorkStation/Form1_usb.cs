@@ -439,8 +439,8 @@ namespace MDWorkStation
 
                 
 
-                //  获得当前U盘的文件个数
-                int count = usbDiskObject.getFileCount();
+                //计算当前U盘的文件个数
+                int count = usbDiskObject.calcFileCount();
 
 
                 
@@ -462,6 +462,11 @@ namespace MDWorkStation
 
                 //设置设备颜色为蓝色
                 pic.BackgroundImage = MDWorkStation.Properties.Resources.b3;
+
+                if (usbDiskObject.getFileCount() <= 0)//如果usb中没有文件，则设置成绿色
+                {
+                    pic.BackgroundImage = MDWorkStation.Properties.Resources.b1;
+                }
                 pic.Refresh();
             }
             else

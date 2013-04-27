@@ -188,7 +188,7 @@
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(67, 90);
             this.button10.TabIndex = 11;
-            this.button10.Text = "取消";
+            this.button10.Text = "清空";
             this.button10.UseVisualStyleBackColor = false;
             this.button10.Click += new System.EventHandler(this.button_Click);
             // 

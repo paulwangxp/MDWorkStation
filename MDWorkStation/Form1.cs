@@ -181,8 +181,8 @@ namespace MDWorkStation
             {
                 Thread.Sleep(1000);
 
-                string sDir = System.Environment.CurrentDirectory + "\\Data\\" + DateTime.Now.Year.ToString() + "\\" +
-                            DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString() + "\\"
+                string sDir = System.Environment.CurrentDirectory + "\\Data\\" + DateTime.Now.ToString("yyyy") + "\\" +
+                            DateTime.Now.ToString("yyyyMM") + "\\"
                             + DateTime.Today.Date.ToString("yyyyMMdd");
 
                 //writeMsg(sDir);
@@ -302,8 +302,8 @@ namespace MDWorkStation
 
             while (threadRunFlag)
             {
-                
 
+                Thread.Sleep(1);
                 for( int i = 0; i<FtpList.Count; i++)
                 {
 
@@ -312,6 +312,8 @@ namespace MDWorkStation
                         Thread.Sleep(1000);
                         continue;
                     }
+
+                    Thread.Sleep(1);
 
                     string localFileName = FtpList[i];
 
@@ -331,14 +333,25 @@ namespace MDWorkStation
                         string removeDir = "";//服务器返回的FTP文件存放路径
                         string removeDir1 = "";
                         string removeFileName = "";//上传到FTP上的文件绝对路径 1/101/103/11.mp4
-                        if (HttpWebResponseUtility.getFtpDirRequestStatusCode(interface_Ftp, m_WorkStationID, out removeDir1)
+                        try
+                        {
+                            if (HttpWebResponseUtility.getFtpDirRequestStatusCode(interface_Ftp, m_WorkStationID, out removeDir1)
                             != System.Net.HttpStatusCode.OK)
+                            {
+
+                                //接口调用失败，停止下面的工作，直接退出
+                                writeMsg("错误，路径接口调用失败，请检查系统设备配置、网络及服务器！");
+                                continue;
+                            }
+                        }
+                        catch (Exception ex)
                         {
 
-                            //接口调用失败，停止下面的工作，直接退出
-                            writeMsg("错误，路径接口调用失败，请检查网络及服务器！");
+                            writeMsg("错误，接口调用失败，请检查系统设备配置、网络及服务器！");
+                            LogManager.WriteErrorLog(ex.Message);
                             continue;
                         }
+                        
                         string[] list1 = removeDir1.Substring(removeDir1.LastIndexOf('\n') + 1).Split(';');
                         if (!list1[0].Equals("0"))
                         {
@@ -356,7 +369,7 @@ namespace MDWorkStation
 
                         //上传文件
                         writeMsg("正在上传文件: " + localFileName);
-                        ftpClient.Upload(localFileName,true);//true,断点续传 使用工作站中的文件上传，防止U盘被拔掉
+                        ftpClient.Upload(localFileName, true);//true,断点续传 使用工作站中的文件上传，防止U盘被拔掉
 
 
                         //获得文件的播放时间
@@ -366,18 +379,27 @@ namespace MDWorkStation
 
 
                         FileInfo fileInfo = new FileInfo(localFileName);
+                        try
+                        {
+                            //调用平台上传接口
+                            if (HttpWebResponseUtility.getUrlRequestStatusCode(interface_Upload, m_WorkStationID, MDUsb.getPoliceIDFromFile(localFileName),
+                                Path.GetFileName(localFileName), removeFileName, MDUsb.getDataTimeFromFile(localFileName), fileInfo.Length.ToString(), fileDuration,
+                                out responseText)
+                                != System.Net.HttpStatusCode.OK)
+                            {
 
-                        //调用平台上传接口
-                        if (HttpWebResponseUtility.getUrlRequestStatusCode(interface_Upload, m_WorkStationID, MDUsb.getPoliceIDFromFile(localFileName),
-                            Path.GetFileName(localFileName), removeFileName, MDUsb.getDataTimeFromFile(localFileName), fileInfo.Length.ToString(), fileDuration,
-                            out responseText)
-                            != System.Net.HttpStatusCode.OK)
+                                //接口调用失败，停止下面的工作，直接退出
+                                writeMsg("错误，上传接口调用失败，请检查系统设备配置、网络及服务器！");
+                                continue;
+
+                            }
+                        }
+                        catch (Exception ex)
                         {
 
-                            //接口调用失败，停止下面的工作，直接退出
-                            writeMsg("错误，上传接口调用失败，请检查网络及服务器！");
+                            writeMsg("错误，接口调用失败，请检查系统设备配置、网络及服务器！");
+                            LogManager.WriteErrorLog(ex.Message);
                             continue;
-
                         }
                         string[] list2 = responseText.Substring(responseText.LastIndexOf('\n') + 1).Split(';');
                         if (!list2[0].Equals("0"))
@@ -465,6 +487,11 @@ namespace MDWorkStation
 
             ShutDownForm form1 = new ShutDownForm();
             form1.ShowDialog();
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            threadRunFlag = false;
         }
 
 

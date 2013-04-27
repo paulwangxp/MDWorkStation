@@ -52,20 +52,23 @@ namespace MDWorkStation
             rtn = CXK_ConnectDV();
             if (rtn > 0)
             {
-                writeMsg(" 连接成功 ,有驱动版本高清DV ");
+                writeMsg( " 连接成功 ,有驱版本 ret= "+rtn.ToString());
 
-                StringBuilder password = new StringBuilder(m_DVPwd);
+                StringBuilder password = null;
+                password = new StringBuilder(m_DVPwd);
 
-                if (CXK_Login(password) != 1)//登录
+                if ( ( rtn=CXK_Login(password) ) != 1)//登录
                 {
                     writeMsg("登录失败");
                     return 0;
                 }
 
+                writeMsg("登录成功 ret= " + rtn.ToString());
+
                 DV_TM t1 = new DV_TM();
 
                 t1.tm_year = DateTime.Now.Year;
-                t1.tm_mon = DateTime.Now.Month;
+                t1.tm_mon = DateTime.Now.Month - 1;
                 t1.tm_mday = DateTime.Now.Day;
                 t1.tm_hour = DateTime.Now.Hour;
                 t1.tm_min = DateTime.Now.Minute;
@@ -73,11 +76,11 @@ namespace MDWorkStation
 
                 t1.tm_yday = 0;
                 t1.tm_isdst = 0;
-                CXK_SetTime(ref t1);//设定时间
-                writeMsg("设定时间");
+                rtn = CXK_SetTime(ref t1);//设定时间
+                writeMsg("设定时间 ret= " + rtn.ToString());
 
-                CXK_IntoUDiskMode();//进入U盘模式
-                writeMsg("进入U盘模式");
+                rtn = CXK_IntoUDiskMode();//进入U盘模式
+                writeMsg("进入U盘模式 ret= " + rtn.ToString());
             }
 
             return rtn;
