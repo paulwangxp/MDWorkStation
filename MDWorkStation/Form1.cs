@@ -204,7 +204,7 @@ namespace MDWorkStation
 
                         foreach (MDUsb usbItem in usbDiskDic.Values)//遍历整个usb队列
                         {
-                            if (MDUsbPos.isComplate(usbItem.driverName))//如果数据已经拷贝完成，就不要再查看了
+                            if (MDUsbPos.isComplate(usbItem.driverName) || !threadRunFlag)//如果数据已经拷贝完成，就不要再查看了
                             {
                                 continue;
                             }
@@ -307,7 +307,7 @@ namespace MDWorkStation
                 for( int i = 0; i<FtpList.Count; i++)
                 {
 
-                    if (FtpList.Count <= 0)
+                    if (FtpList.Count <= 0 || !threadRunFlag)
                     {
                         Thread.Sleep(1000);
                         continue;
@@ -490,6 +490,11 @@ namespace MDWorkStation
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            threadRunFlag = false;
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             threadRunFlag = false;
         }
