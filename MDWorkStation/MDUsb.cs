@@ -259,18 +259,21 @@ namespace MDWorkStation
             return m_FileList.ToArray(); 
         }
 
-        public int calcFileCount()
+        public int calcFileCountAndAdd()
         {
-            m_FileList.AddRange(Directory.GetFiles(driverName, "*.wav", SearchOption.AllDirectories));
+            //目前只认A2打头的这几类文件
+            m_FileList.AddRange(Directory.GetFiles(driverName, "A2*.wav", SearchOption.AllDirectories));
 
-            m_FileList.AddRange(Directory.GetFiles(driverName, "*.mp4", SearchOption.AllDirectories));
+            m_FileList.AddRange(Directory.GetFiles(driverName, "A2*.mp4", SearchOption.AllDirectories));
 
-            m_FileList.AddRange(Directory.GetFiles(driverName, "*.jpg", SearchOption.AllDirectories));
+            m_FileList.AddRange(Directory.GetFiles(driverName, "A2*.jpg", SearchOption.AllDirectories));
 
-            m_FileList.AddRange(Directory.GetFiles(driverName, "*.avi", SearchOption.AllDirectories));
+            m_FileList.AddRange(Directory.GetFiles(driverName, "A2*.avi", SearchOption.AllDirectories));
 
             return m_FileList.Count;
         }
+
+        
 
         public int getFileCount()
         {

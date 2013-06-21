@@ -78,13 +78,14 @@ namespace MDWorkStation
             /// <param name="password"></param>
             /// <param name="timeoutSeconds"></param>
             /// <param name="port"></param>
-            public FtpClient(string server, string username, string password, int timeoutSeconds, int port)
+            public FtpClient(string server, string username, string password, int timeoutSeconds, int port, int bufferSize)
             {
                 this.server = server;
                 this.username = username;
                 this.password = password;
                 this.timeoutSeconds = timeoutSeconds;
                 this.port = port;
+                BUFFER_SIZE = bufferSize;
             }
 
             /// <summary>
@@ -806,6 +807,18 @@ namespace MDWorkStation
                     FireException(this.result.Substring(4));
 
                 showMessage("Renamed file " + oldFileName + " to " + newFileName, false);
+            }
+
+            public void MakeDirs(string dirNames)//dirNames like: 1/2/2012-12-20/
+            {
+                foreach (string sDir in dirNames.Split('/'))
+                {
+                    if (sDir.Length > 0)
+                    {
+                        MakeDir(sDir);
+                        ChangeDir(sDir);
+                    }
+                }
             }
 
             /// <summary>

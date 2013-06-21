@@ -440,7 +440,7 @@ namespace MDWorkStation
                 
 
                 //计算当前U盘的文件个数
-                int count = usbDiskObject.calcFileCount();
+                int count = usbDiskObject.calcFileCountAndAdd();
 
 
                 

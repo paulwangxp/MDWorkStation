@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace MDWorkStation
 {
@@ -79,6 +80,21 @@ namespace MDWorkStation
         {
             WriteLog(msg);
             MessageBox.Show( msg,"错误",MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        
+
+        //返回日期型字符串
+        public static string getTimeString()
+        {
+            DateTime dt = DateTime.Now;
+            return string.Format("{0:yyyyMMddHHmmss_ffff}", dt);
+        }
+
+        //根据文件后缀名，返回日期型文件名，返回 201212032110449999_.jpg
+        public static string getTimeStringFileExtension(string fileName)
+        {
+            return LogManager.getTimeString() + Path.GetExtension(fileName);
         }
     }
 

@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using Microsoft.Win32;
 using System.IO;
-//using MDWorkStation.FtpLib;
+//using MDWorkStation4PC.FtpLib;
 using System.Threading;
 using MDWorkStation.LightFTP;
 
@@ -26,7 +26,7 @@ namespace MDWorkStation
         bool m_topMost = false;//界面是否在最上层
         bool m_hasDriver = false;//是否是有驱动版本
         string m_DVPwd = "";//记录仪有驱动版本的密码
-        string m_DataPathStr = "";//随时录数据保存路径
+        static string m_DataPathStr = "";//随时录数据保存路径
 
         bool m_UploadFlag = false;//是否要上传至平台
         string m_interfaceStr = "";//上传到服务器的接口地址
@@ -34,13 +34,20 @@ namespace MDWorkStation
         string m_ftpPort = "";
         string m_ftpUser = "";
         string m_ftpPwd = "";
+        int m_ftpBuffer = 512;//ftp buffer size
         string m_WorkStationID = "";
+        string m_AppCode = "njmd84588111";//接口调用的appCode，防止人们直接访问接口
+
+        public static void setSavePath(string path)
+        {
+            m_DataPathStr = path;
+        }
 
 
 
         public Form1()
         {
-            this.WindowState = FormWindowState.Maximized;
+            //this.WindowState = FormWindowState.Maximized;//全屏
             this.TopMost = false;//界面是否永远在最上层
 
             InitializeComponent();
@@ -70,6 +77,7 @@ namespace MDWorkStation
                 uploadThread.Start();
             }
 
+            
         }
 
 
@@ -108,7 +116,7 @@ namespace MDWorkStation
             m_topMost = iniObject.IniReadValue("config", "TopMost", "0") == "0" ? false : true;
             m_hasDriver = iniObject.IniReadValue("config", "Driver", "0") == "0" ? false : true;
             m_DVPwd = iniObject.IniReadValue("config", "LoginPwd", "\\Data");//DV的登录密码
-            m_DataPathStr = iniObject.IniReadValue("config", "Path", "\\Data");//目录不允许设置保存路径
+            m_DataPathStr = iniObject.IniReadValue("config", "SavePath", "\\Data");//目录不允许设置保存路径
 
             m_UploadFlag = iniObject.IniReadValue("config", "UploadFlag", "0") == "0" ? false : true;
             m_interfaceStr = iniObject.IniReadValue("config", "UploadInterface", "http://127.0.0.1//interfaceAction.do");
@@ -116,6 +124,7 @@ namespace MDWorkStation
             m_ftpPort = iniObject.IniReadValue("config", "FtpPort", "21");
             m_ftpUser = iniObject.IniReadValue("config", "FtpUser", "test1");
             m_ftpPwd = iniObject.IniReadValue("config", "FtpPwd", "test1");
+            m_ftpBuffer = int.Parse(iniObject.IniReadValue("config", "FtpBuffer", "512"));
             m_WorkStationID = iniObject.IniReadValue("config", "MachineID", "778899");
 
             //FtpClient ftpClient = new FtpClient(m_ftpSever, m_ftpUser, m_ftpPwd, 120, int.Parse(m_ftpPort));
@@ -180,10 +189,23 @@ namespace MDWorkStation
             while (threadRunFlag)
             {
                 Thread.Sleep(1000);
+                string sDir = "";
 
-                string sDir = System.Environment.CurrentDirectory + "\\Data\\" + DateTime.Now.ToString("yyyy") + "\\" +
+                if (!Directory.Exists(m_DataPathStr))//如果设定的目录不存在,就使用当前程序工作路径进行保存
+                {
+
+                    sDir = System.Environment.CurrentDirectory + "\\Data\\" + DateTime.Now.ToString("yyyy") + "\\" +
+                                DateTime.Now.ToString("yyyyMM") + "\\"
+                                + DateTime.Today.Date.ToString("yyyyMMdd");
+                }
+                else {
+                    sDir = m_DataPathStr + "\\" + DateTime.Now.ToString("yyyy") + "\\" +
                             DateTime.Now.ToString("yyyyMM") + "\\"
                             + DateTime.Today.Date.ToString("yyyyMMdd");
+
+                }
+
+                
 
                 //writeMsg(sDir);
 
@@ -297,8 +319,25 @@ namespace MDWorkStation
 
         private void UploadWork()
         {
+            //LogManager.showNotifaction("ereqrew");
+            //string str1 = LogManager.getTimeString();
+            //string str = LogManager.getTimeString() + Path.GetExtension("c:\\123\\345\\222\\12346.jpg");
+            //str.Equals("");
 
-            FtpClient ftpClient = new FtpClient(m_ftpSever, m_ftpUser, m_ftpPwd, 120, int.Parse(m_ftpPort));
+            
+
+            //启动时先查看当前目录下是否有未上传完成的文件
+            List<string> listUnUploadFiles = new List<string>();
+            calcFileCountAndAdd(System.Environment.CurrentDirectory + "\\Data\\", listUnUploadFiles);
+            FtpList.AddRange(listUnUploadFiles);
+
+
+            FtpClient ftpClient = new FtpClient(m_ftpSever, m_ftpUser, m_ftpPwd, 120, int.Parse(m_ftpPort), m_ftpBuffer);
+
+            //for test
+            //ftpClient.Upload(FtpList[0], true);//true,断点续传 使用工作站中的文件上传，防止U盘被拔掉
+            //string remoteRanameFile1 = LogManager.getTimeStringFileExtension(FtpList[0]);
+            //ftpClient.RenameFile(Path.GetFileName(FtpList[0]), remoteRanameFile1, true);//上传后立刻重命名 格式20120312100624_001
 
             while (threadRunFlag)
             {
@@ -335,7 +374,7 @@ namespace MDWorkStation
                         string removeFileName = "";//上传到FTP上的文件绝对路径 1/101/103/11.mp4
                         try
                         {
-                            if (HttpWebResponseUtility.getFtpDirRequestStatusCode(interface_Ftp, m_WorkStationID, out removeDir1)
+                            if (HttpWebResponseUtility.getFtpDirRequestStatusCode(interface_Ftp, m_WorkStationID, MDUsb.getPoliceIDFromFile(localFileName), m_AppCode, out removeDir1)
                             != System.Net.HttpStatusCode.OK)
                             {
 
@@ -364,18 +403,20 @@ namespace MDWorkStation
 
 
                         //切换到服务器接口返回的工作目录                            
-                        ftpClient.MakeDir(removeDir);
-                        ftpClient.ChangeDir(removeDir);
+                        ftpClient.MakeDirs(removeDir);
+                        //ftpClient.ChangeDir(removeDir);
 
                         //上传文件
                         writeMsg("正在上传文件: " + localFileName);
                         ftpClient.Upload(localFileName, true);//true,断点续传 使用工作站中的文件上传，防止U盘被拔掉
+                        string remoteRanameFile = LogManager.getTimeStringFileExtension(localFileName);
+                        ftpClient.RenameFile(Path.GetFileName(localFileName), remoteRanameFile, true);//上传后立刻重命名 格式20120312100624_001
 
 
                         //获得文件的播放时间
                         string fileDuration = FFMpegUtility.getMediaPlayTime(localFileName);
 
-                        removeFileName = removeDir + Path.GetFileName(localFileName);
+                        removeFileName = removeDir + remoteRanameFile;// 包含全ftp路径，例：1/2/201202201223210044.jpg
 
 
                         FileInfo fileInfo = new FileInfo(localFileName);
@@ -384,7 +425,7 @@ namespace MDWorkStation
                             //调用平台上传接口
                             if (HttpWebResponseUtility.getUrlRequestStatusCode(interface_Upload, m_WorkStationID, MDUsb.getPoliceIDFromFile(localFileName),
                                 Path.GetFileName(localFileName), removeFileName, MDUsb.getDataTimeFromFile(localFileName), fileInfo.Length.ToString(), fileDuration,
-                                out responseText)
+                                m_AppCode, out responseText)
                                 != System.Net.HttpStatusCode.OK)
                             {
 
@@ -498,6 +539,33 @@ namespace MDWorkStation
         {
             threadRunFlag = false;
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// 获得某个路径下的文件个数
+        /// </summary>
+        /// <param name="fileDir">文件路径</param>
+        /// <returns></returns>
+        public int calcFileCountAndAdd(string fileDir, List<string> unUploadFileList)
+        {
+            //目前只认A2打头的这几类文件
+            unUploadFileList.AddRange(Directory.GetFiles(fileDir, "A2*.wav", SearchOption.AllDirectories));
+
+            unUploadFileList.AddRange(Directory.GetFiles(fileDir, "A2*.mp4", SearchOption.AllDirectories));
+
+            unUploadFileList.AddRange(Directory.GetFiles(fileDir, "A2*.jpg", SearchOption.AllDirectories));
+
+            unUploadFileList.AddRange(Directory.GetFiles(fileDir, "A2*.avi", SearchOption.AllDirectories));
+
+            return unUploadFileList.Count;
+        }
+
+        
+
 
 
     }

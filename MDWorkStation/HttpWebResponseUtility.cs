@@ -141,18 +141,18 @@ namespace MDWorkStation
 
         public static HttpStatusCode getUrlRequestStatusCode(string methodUrl, string userCode/*上传人编号*/, string editCode/*采集人编号*/,
                                                                 string uploadName/*上传文件名号*/, string uploadPath/*上传路径*/,string createTime/*文件创建时间*/,
-                                                                string fileSize/*文件大小*/, string fileTime/*文件时长*/, out string responseText)
+                                                                string fileSize/*文件大小*/, string fileTime/*文件时长*/, string appCode, out string responseText)
         {
 
             //return “0;/1/101/103/” 表示成功 或者 “1;失败信息”
             string tagUrl = methodUrl + "&userCode=" + userCode + "&editCode=" + editCode + "&uploadName=" + uploadName
-                             + "&filePath=" + uploadPath + "&createTime=" + createTime + "&fileSize=" + fileSize + "&fileTime=" + fileTime;
+                             + "&filePath=" + uploadPath + "&createTime=" + createTime + "&fileSize=" + fileSize + "&fileTime=" + fileTime + "&appCode=" + appCode; ;
             CookieCollection cookies = new CookieCollection();//如何从response.Headers["Set-Cookie"];中获取并设置CookieCollection的代码略  
 
             HttpWebResponse response = HttpWebResponseUtility.CreateGetHttpResponse(tagUrl, null, null, cookies);
 
             Stream resStream = response.GetResponseStream();//返回从 Internet 资源返回数据流
-            StreamReader sr = new StreamReader(resStream, System.Text.Encoding.Default);//实例华一个流的读写器
+            StreamReader sr = new StreamReader(resStream, System.Text.Encoding.UTF8);//实例华一个流的读写器
             responseText = sr.ReadToEnd();//这就是百度首页的HTML哦 ,字符串形式的流的其余部分（从当前位置到末尾）。如果当前位置位于流的末尾，则返回空字符串 ("")
             resStream.Close();//关闭当前流并释放与之关联的所有资源
             sr.Close();
@@ -161,19 +161,27 @@ namespace MDWorkStation
             return response.StatusCode; 
 
         }
-
-        public static HttpStatusCode getFtpDirRequestStatusCode(string methodUrl, string userCode/*上传人编号*/, out string responseText)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="methodUrl">方法url</param>
+        /// <param name="userCode"></param>
+        /// <param name="editCode"></param>
+        /// <param name="appCode"></param>
+        /// <param name="responseText"></param>
+        /// <returns></returns>
+        public static HttpStatusCode getFtpDirRequestStatusCode(string methodUrl, string userCode/*上传人或采集终端编号*/, string editCode/*采集人编号*/, string appCode/*防伪编号*/, out string responseText)
         {
             //return “0;/1/101/103/” 表示成功 或者 “1;失败信息”
 
-            string tagUrl = methodUrl + "&userCode=" + userCode;
+            string tagUrl = methodUrl + "&userCode=" + userCode + "&editCode=" + editCode + "&appCode="+ appCode;
             CookieCollection cookies = new CookieCollection();
 
             HttpWebResponse response = HttpWebResponseUtility.CreateGetHttpResponse(tagUrl, null, null, cookies);
             responseText = response.GetResponseStream().ToString();
 
             Stream resStream = response.GetResponseStream();//返回从 Internet 资源返回数据流
-            StreamReader sr = new StreamReader(resStream, System.Text.Encoding.Default);//实例华一个流的读写器
+            StreamReader sr = new StreamReader(resStream, System.Text.Encoding.UTF8);//实例华一个流的读写器
             responseText = sr.ReadToEnd();//这就是百度首页的HTML哦 ,字符串形式的流的其余部分（从当前位置到末尾）。如果当前位置位于流的末尾，则返回空字符串 ("")
             resStream.Close();//关闭当前流并释放与之关联的所有资源
             sr.Close();
@@ -182,13 +190,19 @@ namespace MDWorkStation
             return response.StatusCode; 
         }
 
-        private static string get_uft8(string unicodeString)
+        public static string gb2312Toutf8(string gb2312Str)
         {
-            //UTF8Encoding utf8 =  new UTF8Encoding();
-            Encoding utf8 = Encoding.GetEncoding("gb2312");
-            Byte[] encodedBytes = utf8.GetBytes(unicodeString);
-            String decodedString = utf8.GetString(encodedBytes);
-            return decodedString;
+
+            System.Text.Encoding GB2312 = System.Text.Encoding.GetEncoding("GB2312");
+            System.Text.Encoding UTF8 = System.Text.Encoding.UTF8;
+            return UTF8.GetString(GB2312.GetBytes(gb2312Str));
+        }
+
+        public static string utf8Togb2312(string utf8Str) 
+        {
+            System.Text.Encoding GB2312 = System.Text.Encoding.GetEncoding("GB2312");
+            System.Text.Encoding UTF8 = System.Text.Encoding.UTF8;
+            return GB2312.GetString(UTF8.GetBytes(utf8Str));
         }
 
         /*
