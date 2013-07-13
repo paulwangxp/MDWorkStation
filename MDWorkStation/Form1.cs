@@ -27,6 +27,10 @@ namespace MDWorkStation
         string m_DVPwd = "";//记录仪有驱动版本的密码
         static string m_DataPathStr = "";//随时录数据保存路径
 
+        string m_FilePrefixString = "";//要支持的文件名前缀
+        string m_FileExtString = "";//要支持的文件名后缀
+        string m_FileRenameString = "";//非支持文件名重命名的前缀
+
         bool m_UploadFlag = false;//是否要上传至平台
         string m_interfaceStr = "";//上传到服务器的接口地址
         string m_ftpSever = "";
@@ -116,6 +120,10 @@ namespace MDWorkStation
             m_hasDriver = iniObject.IniReadValue("config", "Driver", "0") == "0" ? false : true;
             m_DVPwd = iniObject.IniReadValue("config", "LoginPwd", "\\Data");//DV的登录密码
             m_DataPathStr = iniObject.IniReadValue("config", "SavePath", "\\Data");//目录不允许设置保存路径
+
+            m_FilePrefixString = iniObject.IniReadValue("config", "FilePrefixString", "A2");
+            m_FileExtString = iniObject.IniReadValue("config", "FileExtString", "AVI MP4 WAV JPG");
+            m_FileRenameString = iniObject.IniReadValue("config", "SavePath", "DH00000_");
 
             m_UploadFlag = iniObject.IniReadValue("config", "UploadFlag", "0") == "0" ? false : true;
             m_interfaceStr = iniObject.IniReadValue("config", "UploadInterface", "http://127.0.0.1//interfaceAction.do");
@@ -555,16 +563,39 @@ namespace MDWorkStation
         /// <returns></returns>
         public int calcFileCountAndAdd(string fileDir, List<string> unUploadFileList)
         {
-            //目前只认A2打头的这几类文件
-            unUploadFileList.AddRange(Directory.GetFiles(fileDir, "A2*.wav", SearchOption.AllDirectories));
+            //获得要上传的文件列表
+            getFileListForExtName1(m_FilePrefixString, m_FileExtString, unUploadFileList, fileDir);
 
-            unUploadFileList.AddRange(Directory.GetFiles(fileDir, "A2*.mp4", SearchOption.AllDirectories));
+            ////目前只认A2打头的这几类文件
+            //unUploadFileList.AddRange(Directory.GetFiles(fileDir, "A2*.wav", SearchOption.AllDirectories));
 
-            unUploadFileList.AddRange(Directory.GetFiles(fileDir, "A2*.jpg", SearchOption.AllDirectories));
+            //unUploadFileList.AddRange(Directory.GetFiles(fileDir, "A2*.mp4", SearchOption.AllDirectories));
 
-            unUploadFileList.AddRange(Directory.GetFiles(fileDir, "A2*.avi", SearchOption.AllDirectories));
+            //unUploadFileList.AddRange(Directory.GetFiles(fileDir, "A2*.jpg", SearchOption.AllDirectories));
+
+            //unUploadFileList.AddRange(Directory.GetFiles(fileDir, "A2*.avi", SearchOption.AllDirectories));
 
             return unUploadFileList.Count;
+        }
+
+        /// <summary>
+        /// 根据文件前缀和后缀字符串获得文件列表
+        /// </summary>
+        /// <param name="prefixString">前缀</param>
+        /// <param name="FileExtFilter">后缀</param>
+        /// <param name="list1">文件列表</param>
+        /// <param name="fileDir">文件查找路径</param>
+        public void getFileListForExtName1(string prefixString, string FileExtFilter, List<string> list1, string fileDir)
+        {
+            string[] fileArray = FileExtFilter.Split(',');
+            string[] prefixArray = prefixString.Split(',');
+            foreach (string prefixSub in prefixArray)
+            {
+                foreach (string ext in fileArray)
+                {
+                    list1.AddRange(Directory.GetFiles(fileDir, prefixSub + "*." + ext, SearchOption.AllDirectories));
+                }
+            }
         }
 
         

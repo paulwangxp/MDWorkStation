@@ -259,18 +259,69 @@ namespace MDWorkStation
             return m_FileList.ToArray(); 
         }
 
-        public int calcFileCountAndAdd()
+        /// <summary>
+        /// 计算某U盘下的几类文件个数
+        /// </summary>
+        /// <returns>
+        /// 文件个数
+        /// </returns>
+        public int calcFileCountAndAdd(string prefix, string extString)
         {
-            //目前只认A2打头的这几类文件
-            m_FileList.AddRange(Directory.GetFiles(driverName, "A2*.wav", SearchOption.AllDirectories));
 
-            m_FileList.AddRange(Directory.GetFiles(driverName, "A2*.mp4", SearchOption.AllDirectories));
+            getFileListForExtName(prefix, extString, m_FileList);
 
-            m_FileList.AddRange(Directory.GetFiles(driverName, "A2*.jpg", SearchOption.AllDirectories));
 
-            m_FileList.AddRange(Directory.GetFiles(driverName, "A2*.avi", SearchOption.AllDirectories));
+            ////目前只认A2打头的这几类文件
+            //m_FileList.AddRange(Directory.GetFiles(driverName, "A2*.wav", SearchOption.AllDirectories));
+
+            //m_FileList.AddRange(Directory.GetFiles(driverName, "A2*.mp4", SearchOption.AllDirectories));
+
+            //m_FileList.AddRange(Directory.GetFiles(driverName, "A2*.jpg", SearchOption.AllDirectories));
+
+            //m_FileList.AddRange(Directory.GetFiles(driverName, "A2*.avi", SearchOption.AllDirectories));
 
             return m_FileList.Count;
+        }
+
+
+        /// <summary>
+        /// 根据文件扩展字符串，计算此类文件的个数 20130711 add by paul
+        /// </summary>
+        ///<param name="FileFilter"> 文件名前缀，如A2， *, DH ,可支持多个前缀，要以逗号分隔
+        /// <param name="FileExtFilter">文件扩展名 如“.wav .mp3” 必须有“.” 且以逗号分隔</param>
+        /// <returns></returns>
+        public int countExtFileNum(string prefixString, string FileExtFilter)
+        {
+            string[] fileArray = FileExtFilter.Split(',');
+            string[] prefixArray = prefixString.Split(',');
+            int num = 0;
+            foreach (string prefixSub in prefixArray)
+            {
+                foreach (string ext in fileArray)
+                {
+                    num += Directory.GetFiles(driverName, prefixSub + "*." + ext, SearchOption.AllDirectories).Length;
+                }
+            }
+            return num;
+        }
+
+        /// <summary>
+        /// 根据传入参数，获得要得到的文件列表 20130711 add by paul
+        /// </summary>
+        /// <param name="prefix">文件名前缀</param>
+        /// <param name="FileExtFilter">文件名后缀</param>
+        /// <param name="list1">传出参数，文件列表</param>
+        public void getFileListForExtName(string prefixString, string FileExtFilter, List<string> list1)
+        {
+            string[] fileArray = FileExtFilter.Split(',');
+            string[] prefixArray = prefixString.Split(',');
+            foreach (string prefixSub in prefixArray)
+            {
+                foreach (string ext in fileArray)
+                {
+                    list1.AddRange(Directory.GetFiles(driverName, prefixSub + "*." + ext, SearchOption.AllDirectories));
+                }
+            }
         }
 
         

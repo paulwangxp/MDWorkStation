@@ -33,6 +33,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>20130713050752187_128.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ImageButton">
       <HintPath>dll\ImageButton.dll</HintPath>
@@ -135,6 +138,7 @@
     <None Include="images\b2.png" />
     <None Include="images\b1.png" />
     <None Include="images\b3.png" />
+    <Content Include="20130713050752187_128.ico" />
     <Content Include="images\logo.png" />
   </ItemGroup>
   <ItemGroup />

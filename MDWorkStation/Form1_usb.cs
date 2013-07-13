@@ -329,12 +329,13 @@ namespace MDWorkStation
                 return;
 
             RegistryKey HKLM = Registry.LocalMachine;
-            RegistryKey Run = HKLM.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run");
+            RegistryKey Run = HKLM.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run");
             if (Started == true)
             {
                 try
                 {
-                    Run.SetValue(name, path);
+                    if ((String)Run.GetValue(name) == null)
+                        Run.SetValue(name, path);
                     HKLM.Close();
                 }
                 catch
@@ -437,10 +438,10 @@ namespace MDWorkStation
             if (isShow)
             {
 
-                
 
-                //计算当前U盘的文件个数
-                int count = usbDiskObject.calcFileCountAndAdd();
+
+                //计算当前U盘的文件个数，并且将文件列表放入当前usb对象的队列
+                int count = usbDiskObject.calcFileCountAndAdd(m_FilePrefixString, m_FileExtString);
 
 
                 
