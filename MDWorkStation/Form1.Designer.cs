@@ -862,6 +862,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.BackgroundImage = global::MDWorkStation.Properties.Resources._1_376;
             this.ClientSize = new System.Drawing.Size(1280, 812);
             this.Controls.Add(this.labInfo2);

@@ -60,6 +60,12 @@
     <Compile Include="Form1_usb.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FormExplorer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormExplorer.designer.cs">
+      <DependentUpon>FormExplorer.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormPassWord.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -85,6 +91,9 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormExplorer.resx">
+      <DependentUpon>FormExplorer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormPassWord.resx">
       <DependentUpon>FormPassWord.cs</DependentUpon>
     </EmbeddedResource>
@@ -102,6 +111,7 @@
       <DependentUpon>ShutDownForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -116,6 +126,8 @@
     <None Include="images\1_376.gif" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\home.png" />
+    <None Include="Resources\arrow_up.png" />
     <None Include="images\介绍文字.png" />
     <None Include="images\c1.png" />
     <None Include="images\c2.png" />
@@ -125,9 +137,7 @@
     <None Include="images\b3.png" />
     <Content Include="images\logo.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

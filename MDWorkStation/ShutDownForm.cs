@@ -16,6 +16,11 @@ namespace MDWorkStation
             InitializeComponent();
             checkBox_AllDay.Checked = true;
             dateTimePicker1.Enabled = dateTimePicker2.Enabled = false;
+
+            //如果开放上传至服务器功能，就屏蔽文件预览功能
+            INIFile iniobj = new INIFile();
+            if (iniobj.IniReadValue("config", "UploadFlag", "0") == "1")
+                button4.Visible = false;
         }
 
         //关闭电脑
@@ -43,6 +48,12 @@ namespace MDWorkStation
         private void checkBox_AllDay_CheckedChanged(object sender, EventArgs e)
         {
             dateTimePicker1.Enabled = dateTimePicker2.Enabled = !checkBox_AllDay.Checked;
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            FormExplorer form2 = new FormExplorer();
+            form2.ShowDialog();
         }
     }
 }

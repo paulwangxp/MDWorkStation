@@ -67,6 +67,13 @@ namespace MDWorkStation.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap arrow_up {
+            get {
+                object obj = ResourceManager.GetObject("arrow_up", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap b1 {
             get {
                 object obj = ResourceManager.GetObject("b1", resourceCulture);
@@ -105,6 +112,13 @@ namespace MDWorkStation.Properties {
         internal static System.Drawing.Bitmap c3 {
             get {
                 object obj = ResourceManager.GetObject("c3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap home {
+            get {
+                object obj = ResourceManager.GetObject("home", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

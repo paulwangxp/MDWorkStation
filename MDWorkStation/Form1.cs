@@ -8,7 +8,6 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using Microsoft.Win32;
 using System.IO;
-//using MDWorkStation4PC.FtpLib;
 using System.Threading;
 using MDWorkStation.LightFTP;
 
@@ -167,6 +166,7 @@ namespace MDWorkStation
 
         private void button1_Click_1(object sender, EventArgs e)
         {
+            
 
             FormPassWord form2 = new FormPassWord();
             DialogResult result = form2.ShowDialog();
@@ -327,9 +327,12 @@ namespace MDWorkStation
             
 
             //启动时先查看当前目录下是否有未上传完成的文件
-            List<string> listUnUploadFiles = new List<string>();
-            calcFileCountAndAdd(System.Environment.CurrentDirectory + "\\Data\\", listUnUploadFiles);
-            FtpList.AddRange(listUnUploadFiles);
+            if (Directory.Exists(System.Environment.CurrentDirectory + "\\Data\\"))
+            {
+                List<string> listUnUploadFiles = new List<string>();
+                calcFileCountAndAdd(System.Environment.CurrentDirectory + "\\Data\\", listUnUploadFiles);
+                FtpList.AddRange(listUnUploadFiles);
+            }
 
 
             FtpClient ftpClient = new FtpClient(m_ftpSever, m_ftpUser, m_ftpPwd, 120, int.Parse(m_ftpPort), m_ftpBuffer);

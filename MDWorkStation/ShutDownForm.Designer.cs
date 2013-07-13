@@ -37,9 +37,11 @@
             this.label3 = new System.Windows.Forms.Label();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+            this.button4 = new System.Windows.Forms.ImageButton();
             ((System.ComponentModel.ISupportInitialize)(this.button1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Button2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.button3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.button4)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -49,7 +51,7 @@
             this.button1.DownImage = global::MDWorkStation.Properties.Resources.c3;
             this.button1.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.button1.HoverImage = global::MDWorkStation.Properties.Resources.c2;
-            this.button1.Location = new System.Drawing.Point(74, 282);
+            this.button1.Location = new System.Drawing.Point(218, 282);
             this.button1.Name = "button1";
             this.button1.NormalImage = global::MDWorkStation.Properties.Resources.c1;
             this.button1.Size = new System.Drawing.Size(148, 60);
@@ -66,7 +68,7 @@
             this.Button2.DownImage = global::MDWorkStation.Properties.Resources.c3;
             this.Button2.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold);
             this.Button2.HoverImage = global::MDWorkStation.Properties.Resources.c2;
-            this.Button2.Location = new System.Drawing.Point(269, 282);
+            this.Button2.Location = new System.Drawing.Point(399, 282);
             this.Button2.Name = "Button2";
             this.Button2.NormalImage = global::MDWorkStation.Properties.Resources.c1;
             this.Button2.Size = new System.Drawing.Size(148, 60);
@@ -83,7 +85,7 @@
             this.button3.DownImage = global::MDWorkStation.Properties.Resources.c3;
             this.button3.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold);
             this.button3.HoverImage = global::MDWorkStation.Properties.Resources.c2;
-            this.button3.Location = new System.Drawing.Point(472, 282);
+            this.button3.Location = new System.Drawing.Point(580, 282);
             this.button3.Name = "button3";
             this.button3.NormalImage = global::MDWorkStation.Properties.Resources.c1;
             this.button3.Size = new System.Drawing.Size(148, 60);
@@ -162,12 +164,30 @@
             this.dateTimePicker2.Size = new System.Drawing.Size(200, 21);
             this.dateTimePicker2.TabIndex = 21;
             // 
+            // button4
+            // 
+            this.button4.BackColor = System.Drawing.Color.Transparent;
+            this.button4.DialogResult = System.Windows.Forms.DialogResult.None;
+            this.button4.DownImage = global::MDWorkStation.Properties.Resources.c3;
+            this.button4.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button4.HoverImage = global::MDWorkStation.Properties.Resources.c2;
+            this.button4.Location = new System.Drawing.Point(37, 282);
+            this.button4.Name = "button4";
+            this.button4.NormalImage = global::MDWorkStation.Properties.Resources.c1;
+            this.button4.Size = new System.Drawing.Size(148, 60);
+            this.button4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.button4.TabIndex = 22;
+            this.button4.TabStop = false;
+            this.button4.Text = "预览数据";
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
             // ShutDownForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::MDWorkStation.Properties.Resources._1_376;
             this.ClientSize = new System.Drawing.Size(741, 400);
+            this.Controls.Add(this.button4);
             this.Controls.Add(this.dateTimePicker2);
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.label3);
@@ -184,6 +204,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.button1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Button2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.button3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.button4)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -200,5 +221,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.DateTimePicker dateTimePicker2;
+        private System.Windows.Forms.ImageButton button4;
     }
 }
