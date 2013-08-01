@@ -29,8 +29,8 @@ namespace MDWorkStation
             splitContainer1.SplitterDistance = this.FindForm().Width * 1 / 4;
             splitContainer1.IsSplitterFixed = true;
 
-            button4.Top = button4.Top + 20;
-            button4.Left = button4.Left - 20;
+            button4.Left = this.Right - button4.Width - 10;
+            button4.Top = this.Top  + 15;
         }
 
         private void PopulateTreeView()
@@ -77,42 +77,51 @@ namespace MDWorkStation
 
         private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            TreeNode newSelected = e.Node;
-            listView1.Items.Clear();
-            DirectoryInfo nodeDirInfo = (DirectoryInfo)newSelected.Tag;
-
-            m_currentDir = nodeDirInfo.FullName;
-
-            ListViewItem.ListViewSubItem[] subItems;
-            ListViewItem item = null;
-
-            foreach (DirectoryInfo dir in nodeDirInfo.GetDirectories())
+            try
             {
-                item = new ListViewItem(dir.Name, 0);
-                subItems = new ListViewItem.ListViewSubItem[]
+                TreeNode newSelected = e.Node;
+                listView1.Items.Clear();
+                DirectoryInfo nodeDirInfo = (DirectoryInfo)newSelected.Tag;
+
+                m_currentDir = nodeDirInfo.FullName;
+
+                ListViewItem.ListViewSubItem[] subItems;
+                ListViewItem item = null;
+
+                foreach (DirectoryInfo dir in nodeDirInfo.GetDirectories())
+                {
+                    item = new ListViewItem(dir.Name, 0);
+                    subItems = new ListViewItem.ListViewSubItem[]
                     {new ListViewItem.ListViewSubItem(item, "文件夹"), 
                         new ListViewItem.ListViewSubItem(item, 
 						dir.CreationTime.ToShortDateString()),
                      new ListViewItem.ListViewSubItem(item, 
 						dir.LastWriteTime.ToShortDateString())};
-                item.SubItems.AddRange(subItems);
-                listView1.Items.Add(item);
-            }
-            foreach (FileInfo file in nodeDirInfo.GetFiles())
-            {
-                item = new ListViewItem(file.Name, 1);
-                subItems = new ListViewItem.ListViewSubItem[]
+                    item.SubItems.AddRange(subItems);
+                    listView1.Items.Add(item);
+                }
+                foreach (FileInfo file in nodeDirInfo.GetFiles())
+                {
+                    item = new ListViewItem(file.Name, 1);
+                    subItems = new ListViewItem.ListViewSubItem[]
                     { new ListViewItem.ListViewSubItem(item, "文件"), 
                         new ListViewItem.ListViewSubItem(item, 
 						file.CreationTime.ToString()),
                      new ListViewItem.ListViewSubItem(item, 
 						file.LastWriteTime.ToString())};
 
-                item.SubItems.AddRange(subItems);
-                listView1.Items.Add(item);
-            }
+                    item.SubItems.AddRange(subItems);
+                    listView1.Items.Add(item);
+                }
 
-            listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+                listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            }
+            catch (Exception)
+            {
+                
+                //throw;
+            }
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -122,10 +131,18 @@ namespace MDWorkStation
 
         private void listView1_DoubleClick(object sender, EventArgs e)
         {
-            //MessageBox.Show(listView1.SelectedItems[0].SubItems[0].Text);
-            //除文件夹都可以打开
-            if (!listView1.SelectedItems[0].SubItems[1].Text.Equals("文件夹"))
-                Process.Start(m_currentDir + "\\" + listView1.SelectedItems[0].SubItems[0].Text);
+            try
+            {
+                //MessageBox.Show(listView1.SelectedItems[0].SubItems[0].Text);
+                //除文件夹都可以打开
+                if (!listView1.SelectedItems[0].SubItems[1].Text.Equals("文件夹"))
+                    Process.Start(m_currentDir + "\\" + listView1.SelectedItems[0].SubItems[0].Text);
+            }
+            catch (System.Exception)
+            {
+                
+            }
+           
 
         }
 

@@ -862,9 +862,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoScroll = true;
             this.BackgroundImage = global::MDWorkStation.Properties.Resources._1_376;
-            this.ClientSize = new System.Drawing.Size(1280, 812);
+            this.ClientSize = new System.Drawing.Size(1280, 1024);
             this.Controls.Add(this.labInfo2);
             this.Controls.Add(this.pBox_desc);
             this.Controls.Add(this.labInfo);
@@ -929,6 +928,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Form1";
             this.Text = "Form1";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.pBox_logo)).EndInit();

@@ -51,9 +51,16 @@ namespace MDWorkStation
         public Form1()
         {
             //this.WindowState = FormWindowState.Maximized;//全屏
-            this.TopMost = false;//界面是否永远在最上层
+            
 
             InitializeComponent();
+
+            this.TopMost = false;//界面是否永远在最上层
+            this.Size = new System.Drawing.Size(1280, 1024);
+            this.WindowState = FormWindowState.Maximized;
+            this.AutoScroll = false;
+            this.ResumeLayout(false);
+            this.PerformLayout();
            
             InitControlPos();//设置各控件的位置，用于不同分辨率的情况
 
@@ -88,6 +95,8 @@ namespace MDWorkStation
 
         private void InitControlPos()
         {
+                        
+
             //label1.Parent = pictureBox1;
             //label1.BringToFront();
 
